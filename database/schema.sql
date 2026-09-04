@@ -27,8 +27,8 @@ CREATE TABLE interventi(
     campo_operatorio TEXT NOT NULL,
     monouso TEXT NOT NULL,
     strumentario TEXT NOT NULL,
-    FOREIGN KEY (chirurgo) REFERENCES chirurghi(id) ON DELETE RESTRICT,
-    FOREIGN KEY (specialistica) REFERENCES specialistiche(id) ON DELETE RESTRICT
+    FOREIGN KEY (chirurgo) REFERENCES chirurghi(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (specialistica) REFERENCES specialistiche(id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE tavoli(

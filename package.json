@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/FrancescoMoretti/gestione-interventi#readme",
   "dependencies": {
+    "cloudinary": "^2.11.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "multer": "^2.3.0",
     "mysql2": "^3.24.2"
   },
   "devDependencies": {
