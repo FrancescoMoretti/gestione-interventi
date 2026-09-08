@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!--tag di base-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione | Gestionale interventi</title>
+    <!--font e stili-->
+    <link rel="stylesheet" href="./stile/stile.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" id="menu-icon">&#9776;</label>
+            <ul id="menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#">Interventi</a></li>
+                <li><a href="/chirurghi.html">Chirurghi</a></li>
+                <li><a href="/specialistiche.html">Specialistiche</a></li>
+                <li><a class="current" href="/gestione.html">Gestione</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Gestione dei contenuti</h1>
+        <div class="grid" id="chirurgo-grid">
+            <div class="element">
+                <h2>Aggiunta chirurghi:</h2>
+                <form id="aggiungi-chirurgo-form" action="/api/chirurgo" method="POST">
+                    <p><!--messaggio--></p>
+                    <div>
+                        <label for="add-nome-chirurgo" class="required">Nome: </label>
+                        <input type="text" name="nome" id="add-nome-chirurgo" placeholder="Nome" maxlength="30" required>
+                    </div>
+                    <div>
+                        <label for="add-cognome-chirurgo" class="required">Cognome: </label>
+                        <input type="text" name="cognome" id="add-cognome-chirurgo" placeholder="Cognome" maxlength="30" required>
+                    </div>
+                    <input type="submit" value="Aggiungi chirurgo">
+                </form>
+            </div>
+            <div class="element">
+                <h2>Eliminazione chirurghi:</h2>
+                <form id="cancella-chirurgo-form" action="/api/chirurgo/:id" method="DELETE">
+                    <p><!--messaggio--></p>
+                    <div>
+                        <label for="delete-id-chirurgo" class="required">Id chirurgo: </label>
+                        <input type="number" name="id" id="delete-id-chirurgo" placeholder="1" min="1" required>
+                    </div>
+                    <input type="submit" value="Elimina chirurgo">
+                </form>
+            </div>
+            <div class="element">
+                <h2>Modifica chirughi:</h2>
+                <form id="cerca-chirurgo-form" action="/api/chirurgo/:id" method="GET">
+                    <p><!--messaggio--></p>
+                    <div>
+                        <label for="search-id-chirurgo" class="required">Id chirurgo: </label>
+                        <input type="number" id="search-id-chirurgo" placeholder="1" min="1" required>
+                    </div>
+                    <input type="submit" value="Cerca chirurgo">
+                </form>
+                <form id="modifica-chirurgo-form" class="modifica-form" action="/api/chirurgo/:id" method="PUT">
+                    <p><!--messaggio--></p>
+                    <!--input nascosto per avere l'id del chirurgo nello stesso form-->
+                    <input type="hidden" name="id" id="update-id-chirurgo" readonly>
+                    <div>
+                        <label for="update-nome-chirurgo" class="required">Nome: </label>
+                        <input type="text" name="nome" id="update-nome-chirurgo" placeholder="Nome" maxlength="30" required>
+                    </div>
+                    <div>
+                        <label for="update-cognome-chirurgo" class="required">Cognome: </label>
+                        <input type="text" name="cognome" id="update-cognome-chirurgo" placeholder="Cognome" maxlength="30" required>
+                    </div>
+                    <input type="submit" value="Modifica chirurgo">
+                </form>
+            </div>
+        </div>
+        <div class="grid" id="specialistiche-grid">
+            <div class="element">
+                <h2>Aggiunta specialistiche:</h2>
+                <form id="aggiungi-specialistica-form" action="/api/specialistica" method="POST">
+                    <p><!--messaggio--></p>
+                    <div>
+                        <label for="add-nome-specialistica" class="required">Nome: </label>
+                        <input type="text" name="nome" id="add-nome-specialistica" placeholder="Nome" maxlength="50" required>
+                    </div>
+                    <input type="submit" value="Aggiungi specialistica">
+                </form>
+            </div>
+            <div class="element">
+                <h2>Eliminazione specialistiche:</h2>
+                <form id="cancella-specialistiche-form" action="/api/specialistiche/:id" method="DELETE">
+                    <p><!--messaggio--></p>
+                    <div>
+                        <label for="delete-id-specialistiche" class="required">Id specialistiche: </label>
+                        <input type="number" name="id" id="delete-id-specialistiche" placeholder="1" min="1" required>
+                    </div>
+                    <input type="submit" value="Elimina specialistiche">
+                </form>
+            </div>
+            <div class="element">
+                <h2>Modifica specialistiche:</h2>
+                <form id="cerca-specialistiche-form" action="/api/specialistiche/:id" method="GET">
+                    <p><!--messaggio--></p>
+                    <div>
+                        <label for="search-id-specialistiche" class="required">Id specialistiche: </label>
+                        <input type="number" id="search-id-specialistiche" placeholder="1" min="1" required>
+                    </div>
+                    <input type="submit" value="Cerca specialistiche">
+                </form>
+                <form id="modifica-specialistiche-form" class="modifica-form" action="/api/specialistiche/:id" method="PUT">
+                    <p><!--messaggio--></p>
+                    <!--input nascosto per avere l'id della specialistiche nello stesso form-->
+                    <input type="hidden" name="id" id="update-id-specialistiche" readonly>
+                    <div>
+                        <label for="update-nome-specialistiche" class="required">Nome: </label>
+                        <input type="text" name="nome" id="update-nome-specialistiche" placeholder="Nome" maxlength="50" required>
+                    </div>
+                    <input type="submit" value="Modifica specialistiche">
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+
+</html>

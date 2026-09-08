@@ -8,11 +8,15 @@ const app=express();
 const PORT=process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
 const chirurghiRoutes=require('./src/routes/chirurghiRoutes');
 app.use(chirurghiRoutes);
+
+const specialisticheRoutes=require('./src/routes/specialisticheRoutes');
+app.use(specialisticheRoutes);
 
 app.listen(PORT, ()=>{
     console.log(`Server in esecuzione sulla porta ${PORT}`);

@@ -2,38 +2,37 @@ const express=require('express');
 const router=express.Router();
 const pool=require('../db');
 
-//endpoint per inserimento chirurghi
-router.post("/api/chirurgo", async (req, res)=>{
-    let {nome, cognome}=req.body;
+//endpoint per inserimento specialistiche
+router.post("/api/specialistica", async (req, res)=>{
+    let {nome}=req.body;
     //validazione server-side
     //campi obbligatori
-    if(!nome || !String(nome).trim() || !cognome || !String(cognome).trim()){
+    if(!nome || !String(nome).trim()){
         return res.status(400).json({
             success: false,
             message: "Campi obbligatori mancanti."
         });//400: bad request
     }
     nome=nome.trim();
-    cognome=cognome.trim();
     //preparazione query
-    const query=`INSERT INTO chirurghi (nome, cognome) VALUES(?, ?)`;
+    const query=`INSERT INTO specialistiche (nome) VALUES (?)`;
     try{
-        const [result]=await pool.query(query, [nome, cognome]);
-        //chirurgo non inserito
+        const [result]=await pool.query(query, [nome]);
+        //specialistica non inserita
         if(result.affectedRows!==1){
-            return req.status(500).json({
+            return res.status(500).json({
                 success: false,
-                message: "Impossibile aggiungere il chirurgo."
-            });//500: internal server error
+                message: "Impossibile aggiungere la specialistica."
+            });
         }
-        //chirurgo inserito
+        //specialistica inserita
         return res.status(201).json({
             success: true,
-            message: "Chirurgo aggiunto con successo!",
+            message: "Specialistica aggiunta con successo!",
             id: result.insertId
         });//201: created
     }catch(err){
-        console.error("Errore nell'endpoint POST chirurgo: ", err);
+        console.error("Errore nell'endpoint POST specialistica: ", err);
         return res.status(500).json({
             success: false,
             message: "Errore interno durante l'inserimento."
@@ -41,9 +40,9 @@ router.post("/api/chirurgo", async (req, res)=>{
     }
 });
 
-//endpoint per cancellazione chirurgo
-router.delete("/api/chirurgo/:id", async (req, res)=>{
-    const {id}=req.params;//id del chirurgo da eliminare
+//endpoint per cancellazioe specialistica
+router.delete("/api/specialistica/:id", async (req, res)=>{
+    const {id}=req.params;//id della specialistica da eliminare
     //validazione server-side
     if(!id || !String(id).trim()){
         return res.status(400).json({
@@ -52,82 +51,82 @@ router.delete("/api/chirurgo/:id", async (req, res)=>{
         });//400: bad request
     }
     //preparazione query
-    const query="DELETE FROM chirurghi WHERE id=?";
+    const query="DELETE FROM specialistiche WHERE id=?";
     try{
-        const [result]=await pool.query(query, [id]);
+        const [result]=pool.query(query, [id]);
         //cancellazione non avvenuta
         if(result.affectedRows===0){
             return res.status(404).json({
                 success: false,
-                message: "Impossibile eliminare il chirurgo."
+                message: "Impossibile eliminare la specialistica."
             });//404: not found
         }
         //cancellazione avvenuta
         return res.json({
             success: true,
-            message: "Chirurgo eliminato con successo."
+            message: "Specialistica eliminata con successo!"
         });
     }catch(err){
-        console.error("Errore nell'endpoint DELETE chirurgo: ", err);
+        console.error("Errore nell'endpoint DELETE specialistica: ", err);
         if(err.code==='ER_ROW_IS_REFERENCED_2'){
             return res.status(409).json({
                 success: false,
-                message: "Impossibile eliminare un chirurgo associato a degli interventi."
+                message: "Impossibile eliminare una specialistica associata a degli interventi."
             });//409: conflict (on delete restrict)
         }
         return res.status(500).json({
             success: false,
-            message: "Errore interno durante la cancellazione del chirurgo."
+            message: "Errore interno durante la cancellazione della specialistica."
         });
     }
 });
 
-//endpoint per lista chirurghi
-router.get("/api/chirurghi", async (req, res)=>{
+//endpoint per lista specialistiche
+router.get("/api/specialistiche", async (req, res)=>{
     const {limit, offset, filtro}=req.query;
     const limite=parseInt(limit, 10) || 5;//converto in intero base 10, oppure assegno 5
     const inizio=parseInt(offset, 10) || 0;//converto in intero base 10, oppure assegno 0
     //query per contare le righe che avrà la tabella
-    let queryTotali="SELECT COUNT(*) AS totali FROM chirurghi c";
-    //query per estrarre nome e cognome dei chirurghi
-    let queryChirurghi=`SELECT c.id, c.nome, c.cognome FROM chirurghi c`;
-    let paramsChirurghi=[];
+    let queryTotali="SELECT COUNT(*) AS totali FROM specialistiche s";
+    //query per estrarre nome della specialistica
+    let querySpecialistiche=`SELECT s.id, s.nome FROM specialistiche s`;
+    let paramsSpecialistiche=[];
     let paramsTotali=[];
     let whereClause="";//clausola where
     //gestione filtro
     if(filtro){
-        whereClause = " WHERE c.nome LIKE ? OR c.cognome LIKE ?";//spazio all'inizio
+        whereClause = " WHERE s.nome LIKE ?";//spazio all'inizio
         const filtroLike = `%${filtro}%`;
-        paramsTotali.push(filtroLike, filtroLike);
-        paramsChirurghi.push(filtroLike, filtroLike);
+        paramsTotali.push(filtroLike);
+        paramsSpecialistiche.push(filtroLike);
     }
     queryTotali+=whereClause;
-    queryChirurghi+=whereClause;
+    querySpecialistiche+=whereClause;
     //gestione ordinamento
-    queryChirurghi+=" ORDER BY c.cognome ASC LIMIT ? OFFSET ?";//spazio all'inizio
-    paramsChirurghi.push(limite, inizio);
+    querySpecialistiche+=" ORDER BY s.nome ASC LIMIT ? OFFSET ?";//spazio all'inizio
+    paramsSpecialistiche.push(limite, inizio);
     try{
         const [risultatoTotale] = await pool.query(queryTotali, paramsTotali);
         const totali = risultatoTotale[0].totali;
-        const [righe] = await pool.query(queryChirurghi, paramsChirurghi);
+        const [righe] = await pool.query(querySpecialistiche, paramsSpecialistiche);
         return res.json({
             success: true,
-            chirurghi: righe,
+            specialistiche: righe,
             totali: totali
         });
     }catch(err){
-        console.error("Errore nell'endpoint GET chirurghi: ", err);
+        console.error("Errore nell'endpoint GET specialistiche: ", err);
         return res.status(500).json({
             success: false,
-            message: "Errore interno durante il recupero dei chirurghi."
+            message: "Errore interno durante il recupero delle specialistiche."
         });
     }
 });
 
-//endpoint per dettaglio chirurgo
-router.get("/api/chirurgo/:id", async (req, res)=>{
+//endpoint per dettaglio specialistica
+router.get("/api/specialistica/:id", async (req, res)=>{
     const {id}=req.params;
-    //valdazione server-side
+    //validazione server-side
     if(!id || !String(id).trim()){
         return res.status(400).json({
             success: false,
@@ -135,64 +134,60 @@ router.get("/api/chirurgo/:id", async (req, res)=>{
         });//400: bad request
     }
     //preparazione query
-    const query="SELECT id, nome, cognome FROM chirurghi WHERE id=?";
+    const query="SELECT id, nome FROM specialistiche WHERE id=?";
     try{
         const [result]=await pool.query(query, [id]);
-        //chirurgo non trovato
+        //specialistica non trovata
         if(result.length===0){
             return res.status(404).json({
                 success: false,
-                message: "Chirurgo non trovato."
+                message: "Specialistica non trovata"
             });//404: not found
         }
-        //chirurgo trovato
+        //specialistica trovata
         return res.json({
             success: true,
             content: result[0]
         });
     }catch(err){
-        console.error("Errore nell'endpoint GET chirurgo: ", err);
+        console.error("Errore nell'endpoint GET specialistica: ", err);
         return res.status(500).json({
             success: false,
-            message: "Errore interno durante il recupero del chirurgo."
+            message: "Errore interno durate il recupero della specialistica"
         });
     }
 });
 
-//endpoint per aggiornamento chirurgo
-router.put("/api/chirurgo/:id", async (req, res)=>{
+//endpoint per aggiornamento specialistica
+router.put("/api/specialista/:id", async (req, res)=>{
     const {id}=req.params;
-    let {nome, cognome}=req.body
+    const {nome}=req.body;
     //validazione server-side
-    if(!nome || !String(nome).trim() || !cognome || !String(cognome).trim() || !id || !String(id).trim()){
+    if(!nome || !String(nome).trim() || !id || !String(id).trim()){
         return res.status(400).json({
             success: false,
-            message: "Campi obbligatori mancanti (nome, cognome)."
+            message: "Campi obbligatori mancanti."
         });//400: bad request
     }
     nome=nome.trim();
-    cognome=cognome.trim();
     //preparazione query
-    const query="UPDATE chirurghi SET nome=?, cognome=? WHERE id=?";
+    const query="UPDATE specialistiche SET nome=? WHERE id=?";
     try{
-        const [result]=await pool.query(query, [nome, cognome, id]);
-        //aggiornamento non avvenuto
+        const [result]=await pool.query(query, [nome, id]);
+        //aggiornamento avvenuto
         if(result.affectedRows===0){
             return res.status(404).json({
                 success: false,
-                message: "Chirurgo non trovato."
+                message: "Specialistica non trovata."
             });//404: not found
         }
         //aggiornamento avvenuto
-        return res.json({
-            success: true,
-            message: "Chirurgo aggiornato con successo!"
-        });
+        return 
     }catch(err){
-        console.error("Errore nell'endpoint PUT chirurgo: ", err);
+        console.error("Errore nell'endpoint PUT specialistica: ", err);
         return res.status(500).json({
             success: false,
-            message: "Errore interno durante l'aggiornamento del chirurgo."
+            message: "Errore interno durante l'aggiornamento della specialistica."
         });
     }
 });
