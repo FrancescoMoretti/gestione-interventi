@@ -28,8 +28,7 @@ router.post("/api/specialistica", async (req, res)=>{
         //specialistica inserita
         return res.status(201).json({
             success: true,
-            message: "Specialistica aggiunta con successo!",
-            id: result.insertId
+            message: `Specialistica aggiunta con successo, con id: ${result.insertId}.`
         });//201: created
     }catch(err){
         console.error("Errore nell'endpoint POST specialistica: ", err);

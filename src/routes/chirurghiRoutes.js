@@ -21,7 +21,7 @@ router.post("/api/chirurgo", async (req, res)=>{
         const [result]=await pool.query(query, [nome, cognome]);
         //chirurgo non inserito
         if(result.affectedRows!==1){
-            return req.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message: "Impossibile aggiungere il chirurgo."
             });//500: internal server error
@@ -29,8 +29,7 @@ router.post("/api/chirurgo", async (req, res)=>{
         //chirurgo inserito
         return res.status(201).json({
             success: true,
-            message: "Chirurgo aggiunto con successo!",
-            id: result.insertId
+            message: `Chirurgo aggiunto con successo, con id: ${result.insertId}.`
         });//201: created
     }catch(err){
         console.error("Errore nell'endpoint POST chirurgo: ", err);
