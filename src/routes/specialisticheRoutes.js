@@ -52,7 +52,7 @@ router.delete("/api/specialistica/:id", async (req, res)=>{
     //preparazione query
     const query="DELETE FROM specialistiche WHERE id=?";
     try{
-        const [result]=pool.query(query, [id]);
+        const [result]=await pool.query(query, [id]);
         //cancellazione non avvenuta
         if(result.affectedRows===0){
             return res.status(404).json({
@@ -158,9 +158,9 @@ router.get("/api/specialistica/:id", async (req, res)=>{
 });
 
 //endpoint per aggiornamento specialistica
-router.put("/api/specialista/:id", async (req, res)=>{
+router.put("/api/specialistica/:id", async (req, res)=>{
     const {id}=req.params;
-    const {nome}=req.body;
+    let {nome}=req.body;
     //validazione server-side
     if(!nome || !String(nome).trim() || !id || !String(id).trim()){
         return res.status(400).json({
@@ -181,7 +181,10 @@ router.put("/api/specialista/:id", async (req, res)=>{
             });//404: not found
         }
         //aggiornamento avvenuto
-        return 
+        return res.json({
+            success: true,
+            message: "Specialistica aggiornata con successo!"
+        });
     }catch(err){
         console.error("Errore nell'endpoint PUT specialistica: ", err);
         return res.status(500).json({

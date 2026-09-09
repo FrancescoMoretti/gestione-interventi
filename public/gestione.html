@@ -27,6 +27,14 @@
     </header>
     <main>
         <h1>Gestione dei contenuti</h1>
+        <div id="radio-div">
+            <input type="radio" name="tipo-form" id="radio1" value="1">
+            <label for="radio1">Chirurghi</label>
+            <input type="radio" name="tipo-form" id="radio2" value="2">
+            <label for="radio2">Specialistiche</label>
+            <input type="radio" name="tipo-form" id="radio3" value="3">
+            <label for="radio3">Interventi</label>
+        </div>
         <div class="grid" id="chirurgo-grid">
             <div class="element">
                 <h2>Aggiunta chirurghi:</h2>
@@ -80,7 +88,7 @@
                 </form>
             </div>
         </div>
-        <div class="grid" id="specialistiche-grid">
+        <div class="grid" id="specialistica-grid">
             <div class="element">
                 <h2>Aggiunta specialistiche:</h2>
                 <form id="aggiungi-specialistica-form" action="/api/specialistica" method="POST">
@@ -94,35 +102,46 @@
             </div>
             <div class="element">
                 <h2>Eliminazione specialistiche:</h2>
-                <form id="cancella-specialistiche-form" action="/api/specialistiche/:id" method="DELETE">
+                <form id="cancella-specialistica-form" action="/api/specialistica/:id" method="DELETE">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="delete-id-specialistiche" class="required">Id specialistiche: </label>
-                        <input type="number" name="id" id="delete-id-specialistiche" placeholder="1" min="1" required>
+                        <label for="delete-id-specialistica" class="required">Id specialistica: </label>
+                        <input type="number" name="id" id="delete-id-specialistica" placeholder="1" min="1" required>
                     </div>
                     <input type="submit" value="Elimina specialistiche">
                 </form>
             </div>
             <div class="element">
                 <h2>Modifica specialistiche:</h2>
-                <form id="cerca-specialistiche-form" action="/api/specialistiche/:id" method="GET">
+                <form id="cerca-specialistica-form" action="/api/specialistica/:id" method="GET">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="search-id-specialistiche" class="required">Id specialistiche: </label>
-                        <input type="number" id="search-id-specialistiche" placeholder="1" min="1" required>
+                        <label for="search-id-specialistica" class="required">Id specialistica: </label>
+                        <input type="number" id="search-id-specialistica" placeholder="1" min="1" required>
                     </div>
                     <input type="submit" value="Cerca specialistiche">
                 </form>
-                <form id="modifica-specialistiche-form" class="modifica-form" action="/api/specialistiche/:id" method="PUT">
+                <form id="modifica-specialistica-form" class="modifica-form" action="/api/specialistica/:id" method="PUT">
                     <p><!--messaggio--></p>
                     <!--input nascosto per avere l'id della specialistiche nello stesso form-->
-                    <input type="hidden" name="id" id="update-id-specialistiche" readonly>
+                    <input type="hidden" name="id" id="update-id-specialistica" readonly>
                     <div>
-                        <label for="update-nome-specialistiche" class="required">Nome: </label>
-                        <input type="text" name="nome" id="update-nome-specialistiche" placeholder="Nome" maxlength="50" required>
+                        <label for="update-nome-specialistica" class="required">Nome: </label>
+                        <input type="text" name="nome" id="update-nome-specialistica" placeholder="Nome" maxlength="50" required>
                     </div>
                     <input type="submit" value="Modifica specialistiche">
                 </form>
+            </div>
+        </div>
+        <div class="grid" id="intervento-grid">
+            <div class="element">
+                <h2>Aggiunta interventi:</h2>
+            </div>
+            <div class="element">
+                <h2>Eliminazione interventi:</h2>
+            </div>
+            <div class="element">
+                <h2>Modifica interventi:</h2>
             </div>
         </div>
     </main>
