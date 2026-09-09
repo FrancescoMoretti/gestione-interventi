@@ -159,7 +159,9 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
     //fetch POST specialistica
-
+    document.getElementById("aggiungi-specialistica-form").addEventListener("submit", async (event)=>{
+        
+    });
 
     //fetch DELETE specialistica
 
