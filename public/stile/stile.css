@@ -1,0 +1,331 @@
+/*stile generale*/
+:root{
+    --bianco: #fff;
+    --nero: #333;
+    --grigio: #CCC;
+    --grigioScuro: #888;
+    --sfondo1: #EFF6FF;
+    --sfondo2: #add2ff/*#E0F2FE*/;
+    --bluScuro: #1E3A8A;
+    --bluChiaro: #2B6CB0;
+
+}
+
+::selection{
+    background-color: var(--grigio);
+}
+
+body{
+    margin: 0;
+    text-align: center;
+    padding-top: 5em;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;/*tutto lo schermo*/
+    background-color: var(--sfondo1);
+}
+
+main{
+    flex: 1;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-bottom: 1em;
+}
+
+h1, h2, h3, h4, h5, h6{
+    text-align: center;
+}
+
+h1{
+    font-size: 2.5em;
+}
+
+h2{
+    font-size: 2em;
+}
+
+p, q, address{
+    text-align: justify;
+    line-height: 1.05em;
+    font-size: 1.05em;
+}
+
+a{
+    text-decoration: none;
+    color: var(--nero);
+}
+
+ul{
+    list-style: none;
+}
+/*fine stile generale*/
+
+/*inizio stile menù*/
+header nav{
+    background-color: var(--sfondo2);
+    color: var(--bluScuro);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+#menu-toggle, #menu-icon{
+    display: none;
+}
+
+#menu{
+    margin: 0;
+    padding: 0;
+    height: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#menu li{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+#menu a{
+    color: var(--bluScuro);
+    font-weight: bold;
+    transition: color 0.3s ease-out;
+    padding: 0.5em 1.5em;
+    font-size: 1.25em;
+}
+
+#menu a:hover{
+    color: var(--bluChiaro);
+}
+
+.current{
+    text-decoration: underline;
+}
+/*fine stile menù*/
+
+/*inizio stile footer*/
+footer{
+    padding: 1em;
+    background-color: var(--sfondo2);
+    color: var(--bluScuro);
+}
+
+footer address{
+    display: flex;
+    justify-content: center;
+    font-style: normal;
+    margin: 0 4em;
+    gap: 5em;
+}
+
+footer p{
+    text-align: center;
+}
+
+footer p a{
+    font-style: italic;
+    color: var(--bluScuro);
+    transition: color 0.3s ease-out;
+}
+
+footer p a:hover{
+    color: var(--bluChiaro);
+}
+
+footer .material-symbols-outlined{
+    vertical-align: middle;
+    margin-right: 0.2em;
+    font-size: 1.5em;
+}
+/*fine stile footer*/
+
+/*inizio stile grid layout*/
+.grid{
+    display: grid;
+    column-gap: 2em;
+}
+/*fine stile grid layout*/
+
+/*inizio stile area gestione*/
+.area-gestione #radio-div{
+    display: inline;
+    width: 40%;
+}
+
+.area-gestione #radio-div input[name="tipo-form"]{
+    display: none;
+}
+
+.area-gestione #radio-div label{
+    width: auto;
+    padding: 0.20em 1em;
+    cursor: pointer;
+    background-color: var(--sfondo2);
+    color: var(--nero);
+    border-radius: 35%;
+    border: var(--nero) solid 2px;
+    transition: color 0.3s ease-out;
+    font-weight: bold;
+}
+
+.area-gestione #radio-div label:hover,
+.area-gestione #radio-div input[type="radio"]:checked+label{
+    background-color: var(--bluChiaro);
+    color: var(--sfondo2);
+}
+
+.area-gestione .grid{
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 1em;
+    display: none;
+}
+
+.area-gestione .grid .element{
+    background-color: var(--sfondo2);
+    border-radius: 10%;
+    margin: 0.5em 0;
+    padding: 0 1.5em 1em 1.5em;
+}
+
+    /*inizio stile form*/
+    form{}
+
+    form label{
+        font-weight: bold;
+        font-size: 1.10em;
+        padding-right: 0.25em;
+        white-space: nowrap;
+        cursor: text;
+    }
+
+    form .required{
+        text-decoration: underline;
+    }
+
+    form input,
+    form select{
+        font-size: 1.05em;
+    }
+
+    form textarea{
+        font-size: 1.05em;
+        width: 100%;
+        height: 1.20em;
+    }
+
+    form input[type=number]{
+        width: 3em;
+        text-align: center;
+    }
+
+    form div{
+        margin-bottom: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+    }
+
+    form div:has(input[type="number"]){
+        display: block;
+    }
+
+    form p{
+        text-align: center;
+        margin-top: 0;
+        min-height: 1.05em;
+    }
+
+    form input::placeholder{
+        color: var(--grigioScuro);
+    }
+
+    form input[type=text]{
+        width: 100%;
+    }
+
+    form input[type=submit],
+    form input::file-selector-button,
+    button{
+        width: auto;
+        padding: 0.20em, 1em;
+        font-size: 1em;
+        cursor: pointer;
+        font-weight: bold;
+        background-color: var(--sfondo2);
+        color: var(--nero);
+        border-radius: 35%;
+        border: var(--nero) solid 2px;
+        transition: color 0.3s ease-out;
+    }
+
+    form input[type=submit]:hover,
+    form input::file-selector-button:hover,
+    button:hover{
+        background-color: var(--bluChiaro);
+        color: var(--sfondo2);
+    }
+
+    form input:disabled{
+        border-color: var(--nero);
+    }
+
+    .modifica-form{
+        display: none;
+        margin-top: 1em;
+    }
+    /*fine stile form*/
+/*fine stile area gestione*/
+
+
+
+/*stile alternativo schermi <=1024px*/
+@media screen and (max-width: 1024px){
+    /*inizio restyling footer*/
+    footer address{
+        flex-direction: column;
+        margin: auto;
+        gap: 0;
+    }
+    /*fine restyling footer*/
+}
+
+/*stile alternativo schermi <=768px*/
+@media screen and (max-width: 768px){
+    /*inizio restyling menù*/
+    #menu-icon{
+        display: block;
+        font-size: 3em;
+        width: 10%;
+        margin: 0 5% 0 85%;
+        cursor: pointer;
+    }
+
+    #menu{
+        display: none;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: auto;
+    }
+
+    #menu-toggle:checked ~ #menu{
+        display: flex;
+    }
+    /*fine restyling menù*/
+    
+    /*inizio restyling body*/
+    body{
+        padding-top: 4em;
+    }
+    /*fine restyling body*/
+
+    /*inizio restyling area gestione*/
+    .area-gestione .grid{
+        /*display: flex;*/
+        flex-direction: column;
+    }
+    /*fine restyling area gestione*/
+}

@@ -7,15 +7,20 @@ document.addEventListener("DOMContentLoaded", function(){
             document.getElementById("specialistica-grid").style.display="none";
             document.getElementById("intervento-grid").style.display="none";
             const selected=document.querySelector('input[name="tipo-form"]:checked').value;
+            const viewport=window.innerWidth;//larghezza della finestra
+            let formato="grid";//stile in cui mostrare il pannello di gestione
+            if(viewport<=768){
+                formato="flex";
+            }
             switch(selected){
                 case '1':
-                    document.getElementById("chirurgo-grid").style.display="grid";
+                    document.getElementById("chirurgo-grid").style.display=formato;
                 break;
                 case '2':
-                    document.getElementById("specialistica-grid").style.display="grid";
+                    document.getElementById("specialistica-grid").style.display=formato;
                 break;
                 case '3':
-                    document.getElementById("intervento-grid").style.display="grid";
+                    document.getElementById("intervento-grid").style.display=formato;
                 break;
             }
         });

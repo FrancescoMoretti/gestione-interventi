@@ -7,6 +7,7 @@
     <title>Gestione | Gestionale interventi</title>
     <!--font e stili-->
     <link rel="stylesheet" href="./stile/stile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <!--script logici-->
     <script src="scripts/gestione_script.js" defer></script>
 </head>
@@ -18,14 +19,14 @@
             <label for="menu-toggle" id="menu-icon">&#9776;</label>
             <ul id="menu">
                 <li><a href="/">Home</a></li>
-                <li><a href="/#">Interventi</a></li>
+                <li><a href="/interventi.html">Interventi</a></li>
                 <li><a href="/chirurghi.html">Chirurghi</a></li>
                 <li><a href="/specialistiche.html">Specialistiche</a></li>
                 <li><a class="current" href="/gestione.html">Gestione</a></li>
             </ul>
         </nav>
     </header>
-    <main>
+    <main class="area-gestione">
         <h1>Gestione dei contenuti</h1>
         <div id="radio-div">
             <input type="radio" name="tipo-form" id="radio1" value="1">
@@ -146,7 +147,11 @@
         </div>
     </main>
     <footer>
-
+        <p>Per domande o chiarimenti rivolgersi a:</p>
+        <address>
+            <p><span class="material-symbols-outlined">mail</span><a href="mailto:francesco.moretti2803@gmail.com?subject=Info gestionale interventi">francesco.moretti2803@gmail.com</a></p>
+        </address>
+        <p>&copy; 2026 Francesco Moretti. Tutti i diritti riservati.</p>
     </footer>
 </body>
 
