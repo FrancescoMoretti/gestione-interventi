@@ -82,7 +82,7 @@ router.delete("/api/specialistica/:id", async (req, res)=>{
 
 //endpoint per lista specialistiche
 router.get("/api/specialistiche", async (req, res)=>{
-    const {limit, offset, filtro}=req.query;
+    const {limit, offset, filtro, tutti}=req.query;
     const limite=parseInt(limit, 10) || 5;//converto in intero base 10, oppure assegno 5
     const inizio=parseInt(offset, 10) || 0;//converto in intero base 10, oppure assegno 0
     //query per contare le righe che avrà la tabella
@@ -102,8 +102,12 @@ router.get("/api/specialistiche", async (req, res)=>{
     queryTotali+=whereClause;
     querySpecialistiche+=whereClause;
     //gestione ordinamento
-    querySpecialistiche+=" ORDER BY s.nome ASC LIMIT ? OFFSET ?";//spazio all'inizio
-    paramsSpecialistiche.push(limite, inizio);
+    querySpecialistiche+=" ORDER BY s.nome ASC";//spazio all'inizio
+    //recupero di tutte le specialistiche o solo una parte
+    if(tutti!=="true"){
+        querySpecialistiche+=" LIMIT ? OFFSET ?";//spazio all'inizio
+        paramsSpecialistiche.push(limite, inizio);
+    }
     try{
         const [risultatoTotale] = await pool.query(queryTotali, paramsTotali);
         const totali = risultatoTotale[0].totali;

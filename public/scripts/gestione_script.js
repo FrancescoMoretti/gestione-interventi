@@ -26,6 +26,52 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     });
 
+    //popolazione <select> per specialistche e interventi
+    document.getElementById('radio3').addEventListener("click", async (event)=>{
+        const selectSpecialistiche=document.getElementById('add-specialistica-intervento');
+        const selectChirurghi=document.getElementById("add-chirurgo-intervento");
+        //svuoto le <select>
+        while(selectSpecialistiche.options.length>1){
+            selectSpecialistiche.remove(1);//elimino l'options in posizione 1
+        }
+        while(selectChirurghi.options.length>1){
+            selectChirurghi.remove(1);//elimino l'options in posizione 1
+        }
+        try{
+            //recupero TUTTE le specialistiche
+            const res1=await fetch("/api/specialistiche?tutti=true");
+            const result1=await res1.json();
+            if(!res1.ok || !result1.success){
+                alert("Errore di rete: impossibile raggiungere il server.");
+                return;
+            }
+            //popolo <select> con <option> per ogni specialistica
+            result1.specialistiche.forEach(specialistica=>{
+                const option=document.createElement('option');
+                option.value=specialistica.id;
+                option.textContent=specialistica.nome;
+                selectSpecialistiche.appendChild(option);
+            });
+            //recupero tutti i chirurghi
+            const res2=await fetch("/api/chirurghi?tutti=true");
+            const result2=await res2.json();
+            if(!res2.ok || !result2.success){
+                alert("Errore di rete: impossibile raggiungere il server.");
+                return;
+            }
+            //popolo <select> con <option> per ogni chirurgo
+            result2.chirurghi.forEach(chirurgo=>{
+                const option=document.createElement('option');
+                option.value=chirurgo.id;
+                option.textContent=chirurgo.nome+" "+chirurgo.cognome;
+                selectChirurghi.appendChild(option);
+            });
+        }catch(err){
+            alert("Errore di rete: impossibile raggiungere il server.");
+            console.error(err);
+        }
+    });
+
     //fetch POST chirurgo
     document.getElementById("aggiungi-chirurgo-form").addEventListener("submit", async (event)=>{
         event.preventDefault();

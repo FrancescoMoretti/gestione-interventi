@@ -137,6 +137,56 @@
         <div class="grid" id="intervento-grid">
             <div class="element">
                 <h2>Aggiunta interventi:</h2>
+                <form id="aggiungi-intervento-grid" action="/api/intervento" method="POST" enctype="multipart/form-data">
+                    <p><!--messaggio--></p>
+                    <div>
+                        <label for="add-nome-intervento" class="required">Nome: </label>
+                        <input type="text" name="nome" id="add-nome-intervento" placeholder="Nome intervento" maxlength="50" required>
+                    </div>
+                    <div>
+                        <label for="add-descrizione-intervento" class="required">Descrizione: </label>
+                        <textarea name="descrizione" id="add-descrizione-intervento" placeholder="Descrizione intervento" required></textarea>
+                    </div>
+                    <div>
+                        <label for="add-chirurgo-intervento" class="required">Chirurgo: </label>
+                        <select name="chirurgo" id="add-chirurgo-intervento" required>
+                            <option value="" disabled selected hidden>Chirurgo</option>
+                            <!--qui verranno create le option con i nomi degli altri chirurghi-->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="add-specialistica-intervento" class="required">Specialistica: </label>
+                        <select name="specialistica" id="add-specialistica-intervento" required>
+                            <option value="" disabled selected hidden>Specialistica</option>
+                            <!--qui verranno create le option con i nomi delle altre specialistiche-->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="add-setting-intervento" class="required">Setting: </label>
+                        <textarea name="setting" id="add-setting-intervento" placeholder="Setting intervento" required></textarea>
+                    </div>
+                    <div>
+                        <label for="add-anestesia-intervento" class="required">Anestesia: </label>
+                        <textarea name="anestesia" id="add-anestesia-intervento" placeholder="Anestesia" required></textarea>
+                    </div>
+                    <div>
+                        <label for="add-campo-intervento" class="required">Campo: </label>
+                        <textarea name="campo" id="add-campo-intervento" placeholder="Campo operatorio" required></textarea>
+                    </div>
+                    <div>
+                        <label for="add-monouso-intervento" class="required">Monouso: </label>
+                        <textarea name="monouso" id="add-monouso-intervento" placeholder="Monouso" required></textarea>
+                    </div>
+                    <div>
+                        <label for="add-strumentario-intervento" class="required">Strumentario: </label>
+                        <textarea name="strumentario" id="add-strumentario-intervento" placeholder="Strumentario" required></textarea>
+                    </div>
+                    <div>
+                        <label for="add-immagini-tavolo">Tavolo: </label>
+                        <input type="file" name="immagini" id="add-immagini-tavolo" accept="image/*" multiple>
+                    </div>
+                    <input type="submit" value="Aggiungi intervento">
+                </form>
             </div>
             <div class="element">
                 <h2>Eliminazione interventi:</h2>
@@ -147,7 +197,7 @@
         </div>
     </main>
     <footer>
-        <p>Per domande o chiarimenti rivolgersi a:</p>
+        <p>Per domande, errori da risolvere o richieste di modifica rivolgersi a:</p>
         <address>
             <p><span class="material-symbols-outlined">mail</span><a href="mailto:francesco.moretti2803@gmail.com?subject=Info gestionale interventi">francesco.moretti2803@gmail.com</a></p>
         </address>

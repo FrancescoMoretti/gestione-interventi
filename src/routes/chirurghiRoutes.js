@@ -83,7 +83,7 @@ router.delete("/api/chirurgo/:id", async (req, res)=>{
 
 //endpoint per lista chirurghi
 router.get("/api/chirurghi", async (req, res)=>{
-    const {limit, offset, filtro}=req.query;
+    const {limit, offset, filtro, tutti}=req.query;
     const limite=parseInt(limit, 10) || 5;//converto in intero base 10, oppure assegno 5
     const inizio=parseInt(offset, 10) || 0;//converto in intero base 10, oppure assegno 0
     //query per contare le righe che avrà la tabella
@@ -103,8 +103,11 @@ router.get("/api/chirurghi", async (req, res)=>{
     queryTotali+=whereClause;
     queryChirurghi+=whereClause;
     //gestione ordinamento
-    queryChirurghi+=" ORDER BY c.cognome ASC LIMIT ? OFFSET ?";//spazio all'inizio
-    paramsChirurghi.push(limite, inizio);
+    queryChirurghi+=" ORDER BY c.cognome ASC";//spazio all'inizio
+    if(tutti!=="true"){
+        queryChirurghi+=" LIMIT ? OFFSET ?";//spazio all'inizio
+        paramsChirurghi.push(limite, inizio);
+    }
     try{
         const [risultatoTotale] = await pool.query(queryTotali, paramsTotali);
         const totali = risultatoTotale[0].totali;
