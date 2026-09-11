@@ -94,8 +94,8 @@ router.get("/api/specialistiche", async (req, res)=>{
     let whereClause="";//clausola where
     //gestione filtro
     if(filtro){
-        whereClause = " WHERE s.nome LIKE ?";//spazio all'inizio
-        const filtroLike = `%${filtro}%`;
+        whereClause=" WHERE s.nome LIKE ?";//spazio all'inizio
+        const filtroLike=`%${filtro}%`;
         paramsTotali.push(filtroLike);
         paramsSpecialistiche.push(filtroLike);
     }
@@ -109,9 +109,9 @@ router.get("/api/specialistiche", async (req, res)=>{
         paramsSpecialistiche.push(limite, inizio);
     }
     try{
-        const [risultatoTotale] = await pool.query(queryTotali, paramsTotali);
-        const totali = risultatoTotale[0].totali;
-        const [righe] = await pool.query(querySpecialistiche, paramsSpecialistiche);
+        const [risultatoTotale]=await pool.query(queryTotali, paramsTotali);
+        const totali=risultatoTotale[0].totali;
+        const [righe]=await pool.query(querySpecialistiche, paramsSpecialistiche);
         return res.json({
             success: true,
             specialistiche: righe,

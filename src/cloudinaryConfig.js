@@ -27,10 +27,10 @@ const upload=multer({storage: storage, fileFilter, limits:{
 }});
 
 //funzione di upload su cloudinary
-const uploadToCloudinary=(buffer)=>{
+const uploadToCloudinary=(buffer, folder)=>{
     return new Promise((resolve, reject)=>{
         const stream=cloudinary.uploader.upload_stream(
-            { folder: `tavoli` },
+            { folder: `gestione_interventi/${folder}` },
             (error, result)=>{
                 if(error){
                     reject(error);

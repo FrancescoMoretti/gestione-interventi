@@ -95,8 +95,8 @@ router.get("/api/chirurghi", async (req, res)=>{
     let whereClause="";//clausola where
     //gestione filtro
     if(filtro){
-        whereClause = " WHERE c.nome LIKE ? OR c.cognome LIKE ?";//spazio all'inizio
-        const filtroLike = `%${filtro}%`;
+        whereClause=" WHERE c.nome LIKE ? OR c.cognome LIKE ?";//spazio all'inizio
+        const filtroLike=`%${filtro}%`;
         paramsTotali.push(filtroLike, filtroLike);
         paramsChirurghi.push(filtroLike, filtroLike);
     }
@@ -109,9 +109,9 @@ router.get("/api/chirurghi", async (req, res)=>{
         paramsChirurghi.push(limite, inizio);
     }
     try{
-        const [risultatoTotale] = await pool.query(queryTotali, paramsTotali);
-        const totali = risultatoTotale[0].totali;
-        const [righe] = await pool.query(queryChirurghi, paramsChirurghi);
+        const [risultatoTotale]=await pool.query(queryTotali, paramsTotali);
+        const totali=risultatoTotale[0].totali;
+        const [righe]=await pool.query(queryChirurghi, paramsChirurghi);
         return res.json({
             success: true,
             chirurghi: righe,

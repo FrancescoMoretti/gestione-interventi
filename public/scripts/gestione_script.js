@@ -378,4 +378,53 @@ document.addEventListener("DOMContentLoaded", function(){
             console.error(err);
         }
     });
+
+    //fetch POST intervento
+    document.getElementById("aggiungi-intervento-form").addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const form=event.target;
+        const message=form.querySelector('p');
+        //validazione client-side
+        const nome=form.elements["nome"].value.trim();
+        const descrizione=form.elements["descrizione"].value.trim();
+        const chirurgo=form.elements["chirurgo"].value.trim();
+        const specialistica=form.elements["specialistica"].value.trim();
+        const setting=form.elements["setting"].value.trim();
+        const anestesia=form.elements["anestesia"].value.trim();
+        const campo=form.elements["campo"].value.trim();
+        const monouso=form.elements["monouso"].value.trim();
+        const strumentario=form.elements["strumentario"].value.trim();
+        if(!nome || !descrizione || !chirurgo || !specialistica || !setting || !anestesia || !campo || !monouso || !strumentario){
+            message.textContent="Errore: tutti i campi sono obbligatori.";
+            return;
+        }
+        message.textContent="Caricamento in corso...";
+        //preparazione dati
+        const formData=new FormData(form);
+        formData.set("nome", nome);
+        formData.set("descrizione", descrizione);
+        formData.set("chirurgo", chirurgo);
+        formData.set("specialistica", specialistica);
+        formData.set("setting", setting);
+        formData.set("anestesia", anestesia);
+        formData.set("campo", campo);
+        formData.set("monouso", monouso);
+        formData.set("strumentario", strumentario);
+        try{
+            const res=await fetch("/api/intervento", {
+                method: "POST",
+                body: formData
+            });
+            const result=await res.json();
+            if(res.ok && result.success){
+                message.textContent=result.message;
+                form.reset();
+            }else{
+                message.textContent=result.message || "Errore durante il salvataggio.";
+            }
+        }catch(err){
+            message.textContent="Errore di rete: impossibile raggiungere il server.";
+            console.error(err);
+        }
+    });
 });

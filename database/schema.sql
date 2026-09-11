@@ -33,7 +33,7 @@ CREATE TABLE interventi(
 
 CREATE TABLE tavoli(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    url_immagine VARCHAR(255) NOT NULL,
     intervento INT NOT NULL,
+    url_immagine VARCHAR(255) NOT NULL,
     FOREIGN KEY (intervento) REFERENCES interventi(id) ON DELETE CASCADE
 );

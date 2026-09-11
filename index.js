@@ -18,6 +18,9 @@ app.use(chirurghiRoutes);
 const specialisticheRoutes=require('./src/routes/specialisticheRoutes');
 app.use(specialisticheRoutes);
 
+const interventiRoutes=require('./src/routes/interventiRoutes');
+app.use(interventiRoutes);
+
 app.listen(PORT, ()=>{
     console.log(`Server in esecuzione sulla porta ${PORT}`);
 });
