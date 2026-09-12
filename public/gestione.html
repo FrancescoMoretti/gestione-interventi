@@ -190,9 +190,73 @@
             </div>
             <div class="element">
                 <h2>Eliminazione interventi:</h2>
+                <form id="cancella-intervento-form" action="/api/intervento/:id" method="DELETE">
+                    <p><!--messaggio--></p>
+                    <div>
+                        <label for="delete-id-intervento" class="required">Id intervento: </label>
+                        <input type="number" name="id" id="delete-id-intervento" placeholder="1" min="1" required>
+                    </div>
+                    <input type="submit" value="Elimina intervento">
+                </form>
             </div>
             <div class="element">
                 <h2>Modifica interventi:</h2>
+                <form id="cerca-intervento-form" action="/api/intervento/:id" method="GET">
+                    <p><!--messaggio--></p>
+                    <div>
+                        <label for="search-id-intervento" class="required">Id intervento: </label>
+                        <input type="number" id="search-id-intervento" placeholder="1" min="1" required>
+                    </div>
+                    <input type="submit" value="Cerca intervento">
+                </form>
+                <form id="modifica-intervento-form" class="modifica-form" action="/api/intervento/:id" method="PUT">
+                    <p><!--messaggio--></p>
+                    <!--input nascosto per avere l'id dell'intervento nello stesso form-->
+                    <input type="hidden" name="id" id="update-id-intervento" readonly>
+                    <div>
+                        <label for="update-nome-intervento" class="required">Nome: </label>
+                        <input type="text" name="nome" id="update-nome-intervento" placeholder="Nome intervento" maxlength="50" required>
+                    </div>
+                    <div>
+                        <label for="update-descrizione-intervento" class="required">Descrizione: </label>
+                        <textarea name="descrizione" id="update-descrizione-intervento" placeholder="Descrizione intervento" required></textarea>
+                    </div>
+                    <div>
+                        <label for="update-chirurgo-intervento" class="required">Chirurgo: </label>
+                        <select name="chirurgo" id="update-chirurgo-intervento" required>
+                            <option value="" disabled selected hidden>Chirurgo</option>
+                            <!--qui verranno create le option con i nomi degli altri chirurghi-->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="update-specialistica-intervento" class="required">Specialistica: </label>
+                        <select name="specialistica" id="update-specialistica-intervento" required>
+                            <option value="" disabled selected hidden>Specialistica</option>
+                            <!--qui verranno create le option con i nomi delle altre specialistiche-->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="update-setting-intervento" class="required">Setting: </label>
+                        <textarea name="setting" id="update-setting-intervento" placeholder="Setting intervento" required></textarea>
+                    </div>
+                    <div>
+                        <label for="update-anestesia-intervento" class="required">Anestesia: </label>
+                        <textarea name="anestesia" id="update-anestesia-intervento" placeholder="Anestesia" required></textarea>
+                    </div>
+                    <div>
+                        <label for="update-campo-intervento" class="required">Campo: </label>
+                        <textarea name="campo" id="update-campo-intervento" placeholder="Campo operatorio" required></textarea>
+                    </div>
+                    <div>
+                        <label for="update-monouso-intervento" class="required">Monouso: </label>
+                        <textarea name="monouso" id="update-monouso-intervento" placeholder="Monouso" required></textarea>
+                    </div>
+                    <div>
+                        <label for="update-strumentario-intervento" class="required">Strumentario: </label>
+                        <textarea name="strumentario" id="update-strumentario-intervento" placeholder="Strumentario" required></textarea>
+                    </div>
+                    <input type="submit" value="Modifica intervento">
+                </form>
             </div>
         </div>
     </main>

@@ -85,7 +85,7 @@ router.delete("/api/intervento/:id", async (req, res)=>{
     }
     //preparazione query
     const queryImmagini="SELECT t.url_immagine FROM tavoli t JOIN interventi i ON t.intervento=i.id WHERE i.id=?";
-    const queryInterventi="DELETE FROM tavoli WHERE intervento=?";
+    const queryInterventi="DELETE FROM interventi WHERE id=?";
     try{
         const [immagini]=await pool.query(queryImmagini, [id]);
         if(immagini.length>0){
@@ -127,7 +127,7 @@ router.get("/api/interventi", async (req, res)=>{
     const limite=parseInt(limit, 10) || 5;//converto in intero base 10, oppure assegno 5
     const inizio=parseInt(offset, 10) || 0;//converto in intero base 10, oppure assegno 0
     //query per contare le righe che avrà la tabella
-    let queryTotali="SELECT COUNT(*) AS totali FROM interventi i";
+    let queryTotali="SELECT COUNT(*) AS totali FROM interventi i JOIN chirurghi c ON i.chirurgo=c.id JOIN specialistiche s ON i.specialistica=s.id";
     //query per estrarre dati sugli interventi
     let queryInterventi=`SELECT i.id, i.nome, c.nome AS chirurgo_nome, c.cognome AS chirurgo_cognome, s.nome AS specialistica FROM interventi i JOIN chirurghi c ON i.chirurgo=c.id JOIN specialistiche s ON i.specialistica=s.id`;
     let paramsInterventi=[];
@@ -135,10 +135,10 @@ router.get("/api/interventi", async (req, res)=>{
     let whereClause="";//clausola where
     //gestione filtro
     if(filtro){
-        whereClause=" WHERE i.nome LIKE ?";//spazio all'inizio
+        whereClause=" WHERE i.nome LIKE ? OR c.nome LIKE ? OR c.cognome LIKE ? OR s.nome LIKE ?";//spazio all'inizio
         const filtroLike=`%${filtro}%`;
-        paramsTotali.push(filtroLike);
-        paramsInterventi.push(filtroLike);
+        paramsTotali.push(filtroLike, filtroLike, filtroLike, filtroLike);
+        paramsInterventi.push(filtroLike, filtroLike, filtroLike, filtroLike);
     }
     queryTotali+=whereClause;
     queryInterventi+=whereClause;
@@ -175,6 +175,7 @@ router.get("/api/intervento/:id", async (req, res)=>{
     }
     //preparazione query
     const queryInterventi="SELECT id, nome, descrizione, chirurgo, specialistica, setting, anestesia, campo_operatorio, monouso, strumentario FROM interventi WHERE id=?";
+    const queryImmagini="SELECT url_immagine FROM tavoli WHERE intervento=? ORDER BY id ASC";
     try{
         const [resultInterventi]=await pool.query(queryInterventi, [id]);
         //risorsa non trovata
@@ -187,12 +188,13 @@ router.get("/api/intervento/:id", async (req, res)=>{
         //risorsa trovata
         const intervento=resultInterventi[0];
         //recupero immagini
-        /*
-        qui recupererò le immagini del tavolo
-        */
+        const [resultImmagini]=await pool.query(queryImmagini, [intervento.id]);
+        const listaUrlImmagini=resultImmagini.map(riga=>riga.url_immagine);
         return res.json({
             success: true,
-            intervento: intervento
+            intervento: intervento,
+            immagini: listaUrlImmagini,
+            n_immagini: listaUrlImmagini.length
         });
     }catch(err){
         console.error("Errore nell'endpoint GET intervento: ", err);

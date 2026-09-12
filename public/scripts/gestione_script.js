@@ -28,14 +28,20 @@ document.addEventListener("DOMContentLoaded", function(){
 
     //popolazione <select> per specialistche e interventi
     document.getElementById('radio3').addEventListener("click", async (event)=>{
-        const selectSpecialistiche=document.getElementById('add-specialistica-intervento');
-        const selectChirurghi=document.getElementById("add-chirurgo-intervento");
+        const selectSpecialistiche=document.getElementById("add-specialistica-intervento");//select di inserimento
+        const selectSpecialistiche2=document.getElementById("update-specialistica-intervento");//select di modifica
+        const selectChirurghi=document.getElementById("add-chirurgo-intervento");//select di inseriemnto
+        const selectChirurghi2=document.getElementById("update-chirurgo-intervento");//select di modifica
         //svuoto le <select>
         while(selectSpecialistiche.options.length>1){
-            selectSpecialistiche.remove(1);//elimino l'options in posizione 1
+            //elimino l'options in posizione 1
+            selectSpecialistiche.remove(1);
+            selectSpecialistiche2.remove(1);
         }
         while(selectChirurghi.options.length>1){
-            selectChirurghi.remove(1);//elimino l'options in posizione 1
+            //elimino l'options in posizione 1
+            selectChirurghi.remove(1);
+            selectChirurghi2.remove(1);
         }
         try{
             //recupero TUTTE le specialistiche
@@ -50,7 +56,9 @@ document.addEventListener("DOMContentLoaded", function(){
                 const option=document.createElement('option');
                 option.value=specialistica.id;
                 option.textContent=specialistica.nome;
+                const option2=option.cloneNode(true);
                 selectSpecialistiche.appendChild(option);
+                selectSpecialistiche2.appendChild(option2);
             });
             //recupero tutti i chirurghi
             const res2=await fetch("/api/chirurghi?tutti=true");
@@ -64,7 +72,9 @@ document.addEventListener("DOMContentLoaded", function(){
                 const option=document.createElement('option');
                 option.value=chirurgo.id;
                 option.textContent=chirurgo.nome+" "+chirurgo.cognome;
+                const option2=option.cloneNode(true);
                 selectChirurghi.appendChild(option);
+                selectChirurghi2.appendChild(option2);
             });
         }catch(err){
             alert("Errore di rete: impossibile raggiungere il server.");
@@ -421,6 +431,145 @@ document.addEventListener("DOMContentLoaded", function(){
                 form.reset();
             }else{
                 message.textContent=result.message || "Errore durante il salvataggio.";
+            }
+        }catch(err){
+            message.textContent="Errore di rete: impossibile raggiungere il server.";
+            console.error(err);
+        }
+    });
+
+    //fetch DELETE intervento
+    document.getElementById("cancella-intervento-form").addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const form=event.target;
+        const message=form.querySelector('p');
+        //validazione client-side
+        const id=document.getElementById("delete-id-intervento").value.trim();
+        if(!id){
+            message.textContent="Errore: id non inserito."
+            return;
+        }
+        //conferma
+        if(!confirm(`Sei sicura di voler eliminare l'intervento ${id}?`)){
+            return;
+        }
+        message.textContent="Cancellazione in corso...";
+        try{
+            const res=await fetch(`/api/intervento/${encodeURIComponent(id)}`, {
+                method: "DELETE"
+            });
+            const result=await res.json();
+            if(res.ok && result.success){
+                message.textContent=result.message;
+                form.reset();
+            }else{
+                message.textContent=result.message || "Errore durante la cancellazione.";
+            }
+        }catch(err){
+            message.textContent="Errore di rete: impossibile raggiungere il server.";
+            console.error(err);
+        }
+    });
+
+    //fetch GET intervento
+    document.getElementById("cerca-intervento-form").addEventListener("submit", async (event)=>{
+        event.preventDefault();
+       const form=event.target;
+        const message=form.querySelector('p');
+        //validazione client-side
+        const id=document.getElementById("search-id-intervento").value.trim();
+        if(!id){
+            message.textContent="Errore: id non inserito.";
+            return;
+        }
+        const modificaForm=document.getElementById("modifica-intervento-form");
+        const message2=modificaForm.querySelector('p');
+        const salvaBtn=modificaForm.querySelector('input[type="submit"]');
+        message2.textContent="";
+        message.textContent="Ricerca in corso...";
+        salvaBtn.disabled=true;
+        modificaForm.style.display="none";
+        modificaForm.reset();
+        try{
+            const res=await fetch(`/api/intervento/${encodeURIComponent(id)}`);
+            const result=await res.json();
+            if(res.ok && result.success){
+                message.textContent="Intervento trovato!";
+                //popolamento del form di modifica
+                document.getElementById("update-id-intervento").value=result.intervento.id;
+                document.getElementById("update-nome-intervento").value=result.intervento.nome;
+                document.getElementById("update-descrizione-intervento").value=result.intervento.descrizione;
+                document.getElementById("update-chirurgo-intervento").value=result.intervento.chirurgo;
+                document.getElementById("update-specialistica-intervento").value=result.intervento.specialistica;
+                document.getElementById("update-setting-intervento").value=result.intervento.setting;
+                document.getElementById("update-anestesia-intervento").value=result.intervento.anestesia;
+                document.getElementById("update-campo-intervento").value=result.intervento.campo;
+                document.getElementById("update-monouso-intervento").value=result.intervento.monouso;
+                document.getElementById("update-strumentario-intervento").value=result.intervento.strumentario;
+                salvaBtn.disabled=false;
+                modificaForm.style.display="block";
+            }else{
+                message.textContent=result.message || "Errore durante la ricerca.";
+            }
+        }catch(err){
+            message.textContent="Errore di rete: impossibile raggiungere il server.";
+            console.error(err);
+        }
+    });
+
+    //fetch PUT intervento
+    document.getElementById("modifica-intervento-form").addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const form=event.target;
+        const message=form .querySelector('p');
+        //validazione client-side
+        const id=document.getElementById("update-id-intervento").value.trim();
+        const nome=document.getElementById("update-nome-intervento").value.trim();
+        const descrizione=document.getElementById("update-descrizione-intervento").value.trim();
+        const chirurgo=document.getElementById("update-chirurgo-intervento").value.trim();
+        const specialistica=document.getElementById("update-specialistica-intervento").value.trim();
+        const setting=document.getElementById("update-setting-intervento").value.trim();
+        const anestesia=document.getElementById("update-anestesia-intervento").value.trim();
+        const campo=document.getElementById("update-campo-intervento").value.trim();
+        const monouso=document.getElementById("update-monouso-intervento").value.trim();
+        const strumentario=document.getElementById("update-strumentario-intervento").value.trim();
+        if(!id){
+            message.textContent="Errore: id è un campo obbligatorio."
+            return;
+        }
+        if(!nome || !descrizione || !chirurgo || !specialistica || !setting || !anestesia || !campo || !monouso || !strumentario){
+            message.textContent="Errore: tutti i campi sono obbligatori.";
+            return;
+        }
+        const salvaBtn=form.querySelector('input[type="submit"]');
+        message.textContent="Aggiornamento in corso...";
+        const dati={
+            nome: nome,
+            descrizione: descrizione,
+            chirurgo: chirurgo,
+            specialistica: specialistica,
+            setting: setting,
+            anestesia: anestesia,
+            campo: campo,
+            monouso: monouso,
+            strumentario: strumentario
+        };
+        try{
+            const res=await fetch(`/api/intervento/${encodeURIComponent(id)}`, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(dati)
+            });
+            const result=await res.json();
+            if(res.ok && result.success){
+                message.textContent=result.message;
+                form.reset();
+                salvaBtn.disabled=true;
+                const cercaForm=document.getElementById("cerca-intervento-form");
+                cercaForm.querySelector('p').textContent="";
+                cercaForm.reset();
+            }else{
+                message.textContent=result.message || "Errore durante l'aggiornamento.";
             }
         }catch(err){
             message.textContent="Errore di rete: impossibile raggiungere il server.";
