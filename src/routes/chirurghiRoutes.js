@@ -89,7 +89,7 @@ router.get("/api/chirurghi", async (req, res)=>{
     //query per contare le righe che avrà la tabella
     let queryTotali="SELECT COUNT(*) AS totali FROM chirurghi c";
     //query per estrarre nome e cognome dei chirurghi
-    let queryChirurghi=`SELECT c.id, c.nome, c.cognome FROM chirurghi c`;
+    let queryChirurghi=`SELECT c.id, c.nome, c.cognome, CONCAT(c.nome, ' ', c.cognome) AS nome_completo FROM chirurghi c`;
     let paramsChirurghi=[];
     let paramsTotali=[];
     let whereClause="";//clausola where
