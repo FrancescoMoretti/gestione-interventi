@@ -4,10 +4,16 @@
     --nero: #333;
     --grigio: #CCC;
     --grigioScuro: #888;
-    --sfondo1: #EFF6FF;
-    --sfondo2: #add2ff/*#E0F2FE*/;
-    --bluScuro: #1E3A8A;
-    --bluChiaro: #2B6CB0;
+    --blu10: #EFF6FF;/*sfondo chiaro*/
+    --blu9: #CAF0F8;
+    --blu8: #ADE8F4;
+    --blu7: #90E0EF;
+    --blu6: #48CAE4;
+    --blu5: #00B4D8;
+    --blu4: #0096C7;
+    --blu3: #0077B6;
+    --blu2: #023E8A;
+    --blu1: #03045E;/*sondo scuro*/
 
 }
 
@@ -22,7 +28,7 @@ body{
     display: flex;
     flex-direction: column;
     min-height: 100vh;/*tutto lo schermo*/
-    background-color: var(--sfondo1);
+    background-color: var(--blu10);
 }
 
 main{
@@ -66,8 +72,8 @@ ul{
 /*inizio stile menù*/
 header nav{
     font-family: serif;
-    background-color: var(--sfondo2);
-    color: var(--bluScuro);
+    background-color: var(--blu1);
+    color: var(--blu5);
     position: fixed;
     top: 0;
     width: 100%;
@@ -95,7 +101,7 @@ header nav{
 }
 
 #menu a{
-    color: var(--bluScuro);
+    color: var(--blu5);
     font-weight: bold;
     font-family: serif;
     transition: color 0.3s ease-out;
@@ -104,7 +110,7 @@ header nav{
 }
 
 #menu a:hover{
-    color: var(--bluChiaro);
+    color: var(--blu7);
 }
 
 .current{
@@ -115,8 +121,12 @@ header nav{
 /*inizio stile footer*/
 footer{
     padding: 1em;
-    background-color: var(--sfondo2);
-    color: var(--bluScuro);
+    background-color: var(--blu1);
+    color: var(--blu5);
+}
+
+footer::selection{
+    background-color: var(--grigioScuro);
 }
 
 footer address{
@@ -133,12 +143,12 @@ footer p{
 
 footer p a{
     font-style: italic;
-    color: var(--bluScuro);
+    color: var(--blu5);
     transition: color 0.3s ease-out;
 }
 
 footer p a:hover{
-    color: var(--bluChiaro);
+    color: var(--blu7);
 }
 
 footer .material-symbols-outlined{
@@ -169,8 +179,8 @@ footer .material-symbols-outlined{
     width: auto;
     padding: 0.20em 1em;
     cursor: pointer;
-    background-color: var(--sfondo2);
-    color: var(--nero);
+    background-color: var(--blu2);
+    color: var(--blu6);
     border-radius: 35%;
     border: var(--nero) solid 2px;
     transition: color 0.3s ease-out;
@@ -180,8 +190,8 @@ footer .material-symbols-outlined{
 
 .area-gestione #radio-div label:hover,
 .area-gestione #radio-div input[type="radio"]:checked+label{
-    background-color: var(--bluChiaro);
-    color: var(--sfondo2);
+    background-color: var(--blu5);
+    color: var(--blu1);
 }
 
 .area-gestione .grid{
@@ -191,7 +201,7 @@ footer .material-symbols-outlined{
 }
 
 .area-gestione .grid .element{
-    background-color: var(--sfondo2);
+    background-color: var(--blu8);
     border-radius: 10%;
     margin: 0.5em 0;
     padding: 0 1.5em 1em 1.5em;
@@ -266,8 +276,8 @@ footer .material-symbols-outlined{
         font-family: sans-serif;
         cursor: pointer;
         font-weight: bold;
-        background-color: var(--sfondo2);
-        color: var(--nero);
+        background-color: var(--blu2);
+        color: var(--blu6);
         border-radius: 35%;
         border: var(--nero) solid 2px;
         transition: color 0.3s ease-out;
@@ -276,8 +286,8 @@ footer .material-symbols-outlined{
     form input[type=submit]:hover,
     form input::file-selector-button:hover,
     button:hover{
-        background-color: var(--bluChiaro);
-        color: var(--sfondo2);
+        background-color: var(--blu5);
+        color: var(--blu1);
     }
 
     form input:disabled{
@@ -301,6 +311,95 @@ footer .material-symbols-outlined{
     /*fine stile form*/
 /*fine stile area gestione*/
 
+/*inizio stile pagine lista*/
+#ricerca-sec{
+    display: block;
+    width: 55%;
+    margin: 0 auto;
+}
+
+#ricerca-sec div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+}
+
+#ricerca-sec label{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.10em;
+}
+
+#ricerca-sec input[type=text]{
+    font-size: 1.15em;
+    width: 100%;
+}
+
+.lista-contenuti{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+    /*inizio stile tabella*/
+    table{
+        width: 100%;
+        border-collapse: collapse;
+        border: 2px solid var(--nero);
+        margin: auto;
+        margin-top: 1em;
+        font-family: sans-serif;
+        grid-column: span 1;
+    }
+
+    table th,
+    table td{
+        border: 2px solid var(--nero);
+        padding: 0.2em 0.5em;
+    }
+
+    .lista-contenuti table tbody{
+        cursor: pointer;
+    }
+
+    table th{
+        background-color: var(--blu6);
+    }
+
+    table tr:nth-child(odd){
+        background-color: var(--blu8);
+    }
+
+    table tr:nth-child(even){
+        background-color: var(--blu7);
+    }
+    /*fine stile tabella*/
+
+    .lista-contenuti #paginazione{
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 1.05em;
+        margin: 1em auto;
+        grid-column: span 3;
+    }
+
+    .lista-contenuti #paginazione .mobile-btn{
+        display: none;
+    }
+
+    .lista-contenuti .pc-btn{
+        width: fit-content;
+        margin: auto 10%;
+    }
+
+    .lista-contenuti .prec-btn{
+        justify-self: end;
+    }
+
+    .lista-contenuti .succ-btn{
+        justify-self: start;
+    }
+/*fine stile pagine lista*/
 
 
 /*stile alternativo schermi <=1024px*/
@@ -349,4 +448,39 @@ footer .material-symbols-outlined{
         flex-direction: column;
     }
     /*fine restyling area gestione*/
+
+    /*inizio restyling pagine lista*/
+    #ricerca-sec{
+        width: 80%;
+    }
+
+    #ricerca-sec div label{
+        display: none;
+    }
+
+    .lista-contenuti{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lista-contenuti .pc-btn{
+        display: none;
+    }
+
+    .lista-contenuti #paginazione{
+        display: flex;
+    }
+
+    .lista-contenuti #paginazione span{
+        margin-top: 5%;
+    }
+
+    .lista-contenuti #paginazione .mobile-btn{
+        display: block;
+    }
+
+    table{
+        width: 80%;
+    }
+    /*fine restyling pagine lista*/
 }
