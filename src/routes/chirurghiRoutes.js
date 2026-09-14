@@ -1,7 +1,44 @@
 const express=require('express');
 const router=express.Router();
+const fs=require('fs').promises;
+const path=require('path');
 const pool=require('../db');
 const {costruisciFiltro}=require('../utils/filtro');
+const {escapeHTML}=require('../../public/scripts/utils');
+
+//endpoint per rendering server-side per lettura chirurghi
+router.get('/chirurgo.html', async (req, res, next)=>{
+    const {id}=req.query;
+    //validazione server-side
+    if(!id){
+        return next();//nessun id
+    }
+    //preparazione query
+    const query="SELECT id, CONCAT(nome, ' ', cognome) AS nome_completo FROM chirurghi WHERE id=?";
+    try{
+        const [result]=await pool.query(query, [id]);
+        //nessun chirurgo trovato
+        if(result.length===0){
+            return next();
+        }
+        //chirurgo trovato
+        //estraggo i dati
+        const c=result[0];
+        //costruzione dati
+        //titolo
+        const titolo=`${c.nome_completo} | Gestionale interventi`;
+        //inserisco dati nel file html
+        let html=await fs.readFile(path.join(__dirname, '../../public/chirurgo.html'), 'utf-8');
+        html=html.replace('<title>Chirurgo | Gestionale interventi</title>', `<title>${escapeHTML(titolo)}</title>`);
+        html=html.replace('<h1></h1>', `<h1>${escapeHTML(c.nome_completo)}</h1>`);
+        html=html.replace('<p></p>', `<p><span>Id</span>: ${escapeHTML(c.id)}</p>`);
+        res.set('Content-Type', 'text/html');
+        return res.send(html);
+    }catch(err){
+        console.error("Errore nel rendering server-side di chirurgo.html: ", err);
+        next(err);
+    }
+});
 
 //endpoint per inserimento chirurghi
 router.post("/api/chirurgo", async (req, res)=>{
@@ -192,6 +229,48 @@ router.put("/api/chirurgo/:id", async (req, res)=>{
         return res.status(500).json({
             success: false,
             message: "Errore interno durante l'aggiornamento del chirurgo."
+        });
+    }
+});
+
+//endpoint per statistiche sul chirurgo
+router.get("/api/chirurgo/:id/statistiche", async (req, res)=>{
+    const {id}=req.params;
+    //validazione server-side
+    if(!id || !String(id).trim()){
+        return res.status(400).json({
+            success: false,
+            message: "Id non valido."
+        });//400: bad request
+    }
+    //preparazione query
+    const query="SELECT id FROM chirurghi WHERE id=?";
+    const queryInterventi="SELECT COUNT(*) AS numero_interventi FROM interventi WHERE chirurgo=?";
+    const querySpecialistiche="SELECT s.nome, COUNT(*) AS numero_interventi FROM interventi i JOIN specialistiche s ON i.specialistica=s.id WHERE i.chirurgo=? GROUP BY s.id, s.nome ORDER BY numero_interventi DESC LIMIT 3";
+    try{
+        const [result]=await pool.query(query, [id]);
+        //chirurgo non trovato
+        if(result.length===0){
+            return res.status(404).json({
+                success: false,
+                message: "Chirurgo non trovato."
+            });//404: not found
+        }
+        //chirurgo trovato
+        const [resultInterventi]=await pool.query(queryInterventi, [id]);
+        const [resultSpecialistiche]=await pool.query(querySpecialistiche, [id]);
+        return res.json({
+            success: true,
+            content: {
+                numero_interventi: resultInterventi[0].numero_interventi,
+                top_specialistiche: resultSpecialistiche
+            }
+        });
+    }catch(err){
+        console.error("Errore nell'endpoint GET statistiche chirurgo: ", err);
+        return res.status(500).json({
+            success: false,
+            message: "Errore interno durante il recupero della scheda del chirurgo."
         });
     }
 });

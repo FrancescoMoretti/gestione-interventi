@@ -10,8 +10,6 @@ const PORT=process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static('public'));
-
 const chirurghiRoutes=require('./src/routes/chirurghiRoutes');
 app.use(chirurghiRoutes);
 
@@ -20,6 +18,8 @@ app.use(specialisticheRoutes);
 
 const interventiRoutes=require('./src/routes/interventiRoutes');
 app.use(interventiRoutes);
+
+app.use(express.static('public'));
 
 app.listen(PORT, ()=>{
     console.log(`Server in esecuzione sulla porta ${PORT}`);
