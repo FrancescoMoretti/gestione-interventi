@@ -8,9 +8,11 @@
     <!--font e stili-->
     <link rel="stylesheet" href="./stile/stile.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <!--script logici-->
+    <script src="./scripts/lista_contenuti_script.js" defer></script>
 </head>
 
-<body>
+<body id="interventi">
     <header>
         <nav>
             <input type="checkbox" id="menu-toggle">
@@ -25,7 +27,35 @@
         </nav>
     </header>
     <main>
-        
+        <h1>Interventi</h1>
+        <section id="ricerca-sec">
+            <div>
+                <label for="search-bar">Ricerca: </label>
+                <input type="text" name="search-bar" id="search-bar" placeholder="Cerca un intervento">
+            </div>
+        </section>
+        <section class="lista-contenuti">
+            <button class="prec-btn pc-btn"><span class="material-symbols-outlined">arrow_back</span></button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Specialistica</th>
+                        <th>Chirurgo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--corpo della tabella-->
+                </tbody>
+            </table>
+            <button class="succ-btn pc-btn"><span class="material-symbols-outlined">arrow_forward</span></button>
+            <div id="paginazione">
+                <button class="prec-btn mobile-btn"><span class="material-symbols-outlined">arrow_back</span></button>
+                <span id="schermata">Pagina 1</span>
+                <button class="succ-btn mobile-btn"><span class="material-symbols-outlined">arrow_forward</span></button>
+            </div>
+        </section>
     </main>
     <footer>
         <p>Per domande, errori da risolvere o richieste di modifica rivolgersi a:</p>

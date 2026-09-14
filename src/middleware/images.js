@@ -22,4 +22,4 @@ const gestioneErroriUpload=(err, req, res, next)=>{
     }
 };
 
-module.exports=gestioneErroriUpload;
+module.exports={gestioneErroriUpload};

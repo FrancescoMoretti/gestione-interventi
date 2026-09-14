@@ -1,6 +1,5 @@
 let schermata=1;//contatore per la schermata che sto mostrando
 const righe=10;//righe di tabella per ogni pagina
-const altezzaCellaImmagine=4.3;//cella imagine è alta 4.3em
 let timeoutRicerca=null;
 
 document.addEventListener("DOMContentLoaded", async ()=>{
@@ -10,7 +9,6 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     let paginaContenuto=null;
     let colonne=[];
     let chiaveDati=null;
-    let contieneImmagini=false;
     switch(idBody){
         case 'chirurghi':
             endpoint="/api/chirurghi";
@@ -21,10 +19,14 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         case 'specialistiche':
             endpoint="/api/specialistiche";
             paginaContenuto="/specialistica.html";
+            colonne=["id", "nome"];
+            chiaveDati="specialistiche";
         break;
         case 'interventi':
             endpoint="/api/interventi";
             paginaContenuto="/intervento.html";
+            colonne=["id", "nome", "specialistica", "chirurgo_nome_completo"];
+            chiaveDati="interventi";
         break;
         default:
             console.error("Errore: pagina non riconosciuta.");
@@ -100,7 +102,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         tbody.innerHTML="";
         //se non ci sono elementi da mostrare
         if(listaDaMostrare.length===0){
-            tbody.innerHTML=`<tr><td colspan='${colonne.length}'>Nessun contenuto trovato.</td></tr>`;
+            tbody.innerHTML=`<tr><td colspan='${colonne.length}'>Nessun contenuto trovato</td></tr>`;
             precButtons.forEach(btn=>btn.style.visibility="hidden");
             succButtons.forEach(btn=>btn.style.visibility="hidden");
             tbody.style.height="auto";
@@ -119,11 +121,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
             tbody.appendChild(tr);
         });
         //adatto tabella al contenuto
-        if(contieneImmagini){
-            tbody.style.height=`${tbody.rows.length*altezzaCellaImmagine}em`;
-        }else{
-            tbody.style.height="auto";
-        }
+        tbody.style.height="auto";
         //aggiorno indice pagina
         document.getElementById("schermata").textContent=`Pagina ${schermata}`;
         //gestione bottoni

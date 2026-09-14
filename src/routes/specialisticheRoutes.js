@@ -1,6 +1,7 @@
 const express=require('express');
 const router=express.Router();
 const pool=require('../db');
+const {costruisciFiltro}=require('../utils/filtro');
 
 //endpoint per inserimento specialistiche
 router.post("/api/specialistica", async (req, res)=>{
@@ -91,16 +92,12 @@ router.get("/api/specialistiche", async (req, res)=>{
     let querySpecialistiche=`SELECT s.id, s.nome FROM specialistiche s`;
     let paramsSpecialistiche=[];
     let paramsTotali=[];
-    let whereClause="";//clausola where
     //gestione filtro
-    if(filtro){
-        whereClause=" WHERE s.nome LIKE ?";//spazio all'inizio
-        const filtroLike=`%${filtro}%`;
-        paramsTotali.push(filtroLike);
-        paramsSpecialistiche.push(filtroLike);
-    }
+    const {whereClause, parametri}=costruisciFiltro(["s.id", "s.nome"], filtro);
     queryTotali+=whereClause;
     querySpecialistiche+=whereClause;
+    paramsTotali.push(...parametri);//...<=>spread operator: parametri è un array e con "..." davanti vengono passati gli elementi che contiene separatamente
+    paramsSpecialistiche.push(...parametri);//...<=>spread operator: parametri è un array e con "..." davanti vengono passati gli elementi che contiene separatamente
     //gestione ordinamento
     querySpecialistiche+=" ORDER BY s.nome ASC";//spazio all'inizio
     //recupero di tutte le specialistiche o solo una parte

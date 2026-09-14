@@ -1,6 +1,7 @@
 const express=require('express');
 const router=express.Router();
 const pool=require('../db');
+const {costruisciFiltro}=require('../utils/filtro');
 
 //endpoint per inserimento chirurghi
 router.post("/api/chirurgo", async (req, res)=>{
@@ -92,16 +93,12 @@ router.get("/api/chirurghi", async (req, res)=>{
     let queryChirurghi=`SELECT c.id, c.nome, c.cognome, CONCAT(c.nome, ' ', c.cognome) AS nome_completo FROM chirurghi c`;
     let paramsChirurghi=[];
     let paramsTotali=[];
-    let whereClause="";//clausola where
     //gestione filtro
-    if(filtro){
-        whereClause=" WHERE c.nome LIKE ? OR c.cognome LIKE ?";//spazio all'inizio
-        const filtroLike=`%${filtro}%`;
-        paramsTotali.push(filtroLike, filtroLike);
-        paramsChirurghi.push(filtroLike, filtroLike);
-    }
+    const {whereClause, parametri}=costruisciFiltro(["c.id", "c.nome", "c.cognome"], filtro);
     queryTotali+=whereClause;
     queryChirurghi+=whereClause;
+    paramsTotali.push(...parametri);//...<=>spread operator: parametri è un array e con "..." davanti vengono passati gli elementi che contiene separatamente
+    paramsChirurghi.push(...parametri);//...<=>spread operator: parametri è un array e con "..." davanti vengono passati gli elementi che contiene separatamente
     //gestione ordinamento
     queryChirurghi+=" ORDER BY c.cognome ASC";//spazio all'inizio
     if(tutti!=="true"){

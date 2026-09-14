@@ -2,7 +2,8 @@ const express=require('express');
 const router=express.Router();
 const pool=require('../db');
 const {cloudinary, upload, uploadToCloudinary}=require('../cloudinaryConfig');
-const gestioneErroriUpload=require('../middleware/images');
+const {gestioneErroriUpload}=require('../middleware/images');
+const {costruisciFiltro}=require('../utils/filtro');
 //const {validaStringa}=require('../utils/validazione');
 
 
@@ -129,19 +130,15 @@ router.get("/api/interventi", async (req, res)=>{
     //query per contare le righe che avrà la tabella
     let queryTotali="SELECT COUNT(*) AS totali FROM interventi i JOIN chirurghi c ON i.chirurgo=c.id JOIN specialistiche s ON i.specialistica=s.id";
     //query per estrarre dati sugli interventi
-    let queryInterventi=`SELECT i.id, i.nome, c.nome AS chirurgo_nome, c.cognome AS chirurgo_cognome, s.nome AS specialistica FROM interventi i JOIN chirurghi c ON i.chirurgo=c.id JOIN specialistiche s ON i.specialistica=s.id`;
+    let queryInterventi=`SELECT i.id, i.nome, CONCAT(c.nome, ' ', c.cognome) AS chirurgo_nome_completo, s.nome AS specialistica FROM interventi i JOIN chirurghi c ON i.chirurgo=c.id JOIN specialistiche s ON i.specialistica=s.id`;
     let paramsInterventi=[];
     let paramsTotali=[];
-    let whereClause="";//clausola where
     //gestione filtro
-    if(filtro){
-        whereClause=" WHERE i.nome LIKE ? OR c.nome LIKE ? OR c.cognome LIKE ? OR s.nome LIKE ?";//spazio all'inizio
-        const filtroLike=`%${filtro}%`;
-        paramsTotali.push(filtroLike, filtroLike, filtroLike, filtroLike);
-        paramsInterventi.push(filtroLike, filtroLike, filtroLike, filtroLike);
-    }
+    const {whereClause, parametri}=costruisciFiltro(["i.id", "i.nome", "CONCAT(c.nome, ' ', c.cognome)", "s.nome"], filtro);
     queryTotali+=whereClause;
     queryInterventi+=whereClause;
+    paramsTotali.push(...parametri);//...<=>spread operator: parametri è un array e con "..." davanti vengono passati gli elementi che contiene separatamente
+    paramsInterventi.push(...parametri);//<=>spread operator: parametri è un array e con "..." davanti vengono passati gli elementi che contiene separatamente
     //gestione ordinamento
     queryInterventi+=" ORDER BY i.nome ASC LIMIT ? OFFSET ?";//spazio all'inizio
     paramsInterventi.push(limite, inizio);
