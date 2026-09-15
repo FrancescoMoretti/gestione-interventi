@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", async function caricaIntervento(){
         let stringaHTML="";
         stringaHTML+=`<li><span>Id</span>: ${escapeHTML(intervento.id)}</li>`;
         stringaHTML+=`<li><span>Descrizione</span>: ${escapeHTML(intervento.descrizione)}</li>`;
-        stringaHTML+=`<li><span>Specialistica</span>: ${escapeHTML(intervento.specialistica)}</li>`;
-        stringaHTML+=`<li><span>Chirurgo</span>: ${escapeHTML(intervento.chirurgo)}</li>`;
+        stringaHTML+=`<li><span>Specialistica</span>: ${escapeHTML(intervento.nome_specialistica)}</li>`;
+        stringaHTML+=`<li><span>Chirurgo</span>: ${escapeHTML(intervento.nome_chirurgo)}</li>`;
         stringaHTML+=`<li><span>Setting</span>: ${escapeHTML(intervento.setting)}</li>`;
         stringaHTML+=`<li><span>Anestesia</span>: ${escapeHTML(intervento.anestesia)}</li>`;
         stringaHTML+=`<li><span>Campo operatorio</span>: ${escapeHTML(intervento.campo)}</li>`;

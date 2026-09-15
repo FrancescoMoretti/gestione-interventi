@@ -206,7 +206,7 @@ router.get("/api/intervento/:id", async (req, res)=>{
         });//400: bad request
     }
     //preparazione query
-    const queryInterventi="SELECT id, nome, descrizione, chirurgo, specialistica, setting, anestesia, campo_operatorio, monouso, strumentario FROM interventi WHERE id=?";
+    const queryInterventi="SELECT i.id, i.nome, i.descrizione, i.chirurgo, CONCAT(c.nome, ' ', c.cognome) AS nome_chirurgo, i.specialistica, s.nome AS nome_specialistica, i.setting, i.anestesia, i.campo_operatorio, i.monouso, i.strumentario FROM interventi i JOIN chirurghi c ON i.chirurgo=c.id JOIN specialistiche s ON i.specialistica=s.id WHERE i.id=?";
     const queryImmagini="SELECT url_immagine FROM tavoli WHERE intervento=? ORDER BY id ASC";
     try{
         const [resultInterventi]=await pool.query(queryInterventi, [id]);
