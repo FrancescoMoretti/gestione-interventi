@@ -495,6 +495,34 @@ footer .material-symbols-outlined{
     /*fine stile slider*/
 /*fine stile pagine dettaglio*/
 
+/*inizio stile pagina home*/
+#statistiche-div{
+    width: 40%;
+    background-color: var(--blu8);
+    border-radius: 25%;
+    margin: 0.5em auto;
+    padding: 0 1.5em 1em 1.5em;
+}
+
+#statistiche-div span{
+    font-weight: bold;
+}
+
+#statistiche-div p{
+    text-align: center;
+}
+
+#statistiche-div ul{
+    font-family: sans-serif;
+    padding-left: 0;
+}
+
+#statistiche-div ul li{
+    margin-bottom: 0.75em;
+    font-size: 1.05em;
+}
+/*fine stile pagina home*/
+
 /*stile alternativo schermi <=1024px*/
 @media screen and (max-width: 1024px){
     /*inizio restyling footer*/
@@ -510,6 +538,12 @@ footer .material-symbols-outlined{
         width: 75%;
     }
     /*fine restyling pagine dettaglio*/
+
+    /*inizio restyling pagina home*/
+    #statistiche-div{
+        width: 60%;
+    }
+    /*fine restyling pagina home*/
 }
 
 /*stile alternativo schermi <=768px*/
@@ -608,4 +642,10 @@ footer .material-symbols-outlined{
         text-align: center;
     }
     /*fine restyling pagine dettaglio interventi*/
+
+    /*inizio restyling pagina home*/
+    #statistiche-div{
+        width: 80%;
+    }
+    /*fine restyling pagina home*/
 }
