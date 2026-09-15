@@ -42,11 +42,11 @@
                 <form id="aggiungi-chirurgo-form" action="/api/chirurgo" method="POST">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="add-nome-chirurgo" class="required">Nome: </label>
+                        <label for="add-nome-chirurgo">Nome: </label>
                         <input type="text" name="nome" id="add-nome-chirurgo" placeholder="Nome" maxlength="30" required>
                     </div>
                     <div>
-                        <label for="add-cognome-chirurgo" class="required">Cognome: </label>
+                        <label for="add-cognome-chirurgo">Cognome: </label>
                         <input type="text" name="cognome" id="add-cognome-chirurgo" placeholder="Cognome" maxlength="30" required>
                     </div>
                     <input type="submit" value="Aggiungi chirurgo">
@@ -57,7 +57,7 @@
                 <form id="cancella-chirurgo-form" action="/api/chirurgo/:id" method="DELETE">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="delete-id-chirurgo" class="required">Id chirurgo: </label>
+                        <label for="delete-id-chirurgo">Id chirurgo: </label>
                         <input type="number" name="id" id="delete-id-chirurgo" placeholder="1" min="1" required>
                     </div>
                     <input type="submit" value="Elimina chirurgo">
@@ -68,7 +68,7 @@
                 <form id="cerca-chirurgo-form" action="/api/chirurgo/:id" method="GET">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="search-id-chirurgo" class="required">Id chirurgo: </label>
+                        <label for="search-id-chirurgo">Id chirurgo: </label>
                         <input type="number" id="search-id-chirurgo" placeholder="1" min="1" required>
                     </div>
                     <input type="submit" value="Cerca chirurgo">
@@ -78,11 +78,11 @@
                     <!--input nascosto per avere l'id del chirurgo nello stesso form-->
                     <input type="hidden" name="id" id="update-id-chirurgo" readonly>
                     <div>
-                        <label for="update-nome-chirurgo" class="required">Nome: </label>
+                        <label for="update-nome-chirurgo">Nome: </label>
                         <input type="text" name="nome" id="update-nome-chirurgo" placeholder="Nome" maxlength="30" required>
                     </div>
                     <div>
-                        <label for="update-cognome-chirurgo" class="required">Cognome: </label>
+                        <label for="update-cognome-chirurgo">Cognome: </label>
                         <input type="text" name="cognome" id="update-cognome-chirurgo" placeholder="Cognome" maxlength="30" required>
                     </div>
                     <input type="submit" value="Modifica chirurgo">
@@ -95,7 +95,7 @@
                 <form id="aggiungi-specialistica-form" action="/api/specialistica" method="POST">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="add-nome-specialistica" class="required">Nome: </label>
+                        <label for="add-nome-specialistica">Nome: </label>
                         <input type="text" name="nome" id="add-nome-specialistica" placeholder="Nome" maxlength="50" required>
                     </div>
                     <input type="submit" value="Aggiungi specialistica">
@@ -106,7 +106,7 @@
                 <form id="cancella-specialistica-form" action="/api/specialistica/:id" method="DELETE">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="delete-id-specialistica" class="required">Id specialistica: </label>
+                        <label for="delete-id-specialistica">Id specialistica: </label>
                         <input type="number" name="id" id="delete-id-specialistica" placeholder="1" min="1" required>
                     </div>
                     <input type="submit" value="Elimina specialistiche">
@@ -117,7 +117,7 @@
                 <form id="cerca-specialistica-form" action="/api/specialistica/:id" method="GET">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="search-id-specialistica" class="required">Id specialistica: </label>
+                        <label for="search-id-specialistica">Id specialistica: </label>
                         <input type="number" id="search-id-specialistica" placeholder="1" min="1" required>
                     </div>
                     <input type="submit" value="Cerca specialistiche">
@@ -127,7 +127,7 @@
                     <!--input nascosto per avere l'id della specialistiche nello stesso form-->
                     <input type="hidden" name="id" id="update-id-specialistica" readonly>
                     <div>
-                        <label for="update-nome-specialistica" class="required">Nome: </label>
+                        <label for="update-nome-specialistica">Nome: </label>
                         <input type="text" name="nome" id="update-nome-specialistica" placeholder="Nome" maxlength="50" required>
                     </div>
                     <input type="submit" value="Modifica specialistiche">
@@ -140,45 +140,45 @@
                 <form id="aggiungi-intervento-form" action="/api/intervento" method="POST" enctype="multipart/form-data">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="add-nome-intervento" class="required">Nome: </label>
+                        <label for="add-nome-intervento">Nome: </label>
                         <input type="text" name="nome" id="add-nome-intervento" placeholder="Nome intervento" maxlength="50" required>
                     </div>
                     <div>
-                        <label for="add-descrizione-intervento" class="required">Descrizione: </label>
+                        <label for="add-descrizione-intervento">Descrizione: </label>
                         <textarea name="descrizione" id="add-descrizione-intervento" placeholder="Descrizione intervento" required></textarea>
                     </div>
                     <div>
-                        <label for="add-chirurgo-intervento" class="required">Chirurgo: </label>
+                        <label for="add-chirurgo-intervento">Chirurgo: </label>
                         <select name="chirurgo" id="add-chirurgo-intervento" required>
                             <option value="" disabled selected hidden>Chirurgo</option>
                             <!--qui verranno create le option con i nomi degli altri chirurghi-->
                         </select>
                     </div>
                     <div>
-                        <label for="add-specialistica-intervento" class="required">Specialistica: </label>
+                        <label for="add-specialistica-intervento">Specialistica: </label>
                         <select name="specialistica" id="add-specialistica-intervento" required>
                             <option value="" disabled selected hidden>Specialistica</option>
                             <!--qui verranno create le option con i nomi delle altre specialistiche-->
                         </select>
                     </div>
                     <div>
-                        <label for="add-setting-intervento" class="required">Setting: </label>
+                        <label for="add-setting-intervento">Setting: </label>
                         <textarea name="setting" id="add-setting-intervento" placeholder="Setting intervento" required></textarea>
                     </div>
                     <div>
-                        <label for="add-anestesia-intervento" class="required">Anestesia: </label>
+                        <label for="add-anestesia-intervento">Anestesia: </label>
                         <textarea name="anestesia" id="add-anestesia-intervento" placeholder="Anestesia" required></textarea>
                     </div>
                     <div>
-                        <label for="add-campo-intervento" class="required">Campo: </label>
+                        <label for="add-campo-intervento">Campo: </label>
                         <textarea name="campo" id="add-campo-intervento" placeholder="Campo operatorio" required></textarea>
                     </div>
                     <div>
-                        <label for="add-monouso-intervento" class="required">Monouso: </label>
+                        <label for="add-monouso-intervento">Monouso: </label>
                         <textarea name="monouso" id="add-monouso-intervento" placeholder="Monouso" required></textarea>
                     </div>
                     <div>
-                        <label for="add-strumentario-intervento" class="required">Strumentario: </label>
+                        <label for="add-strumentario-intervento">Strumentario: </label>
                         <textarea name="strumentario" id="add-strumentario-intervento" placeholder="Strumentario" required></textarea>
                     </div>
                     <div>
@@ -193,7 +193,7 @@
                 <form id="cancella-intervento-form" action="/api/intervento/:id" method="DELETE">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="delete-id-intervento" class="required">Id intervento: </label>
+                        <label for="delete-id-intervento">Id intervento: </label>
                         <input type="number" name="id" id="delete-id-intervento" placeholder="1" min="1" required>
                     </div>
                     <input type="submit" value="Elimina intervento">
@@ -204,7 +204,7 @@
                 <form id="cerca-intervento-form" action="/api/intervento/:id" method="GET">
                     <p><!--messaggio--></p>
                     <div>
-                        <label for="search-id-intervento" class="required">Id intervento: </label>
+                        <label for="search-id-intervento">Id intervento: </label>
                         <input type="number" id="search-id-intervento" placeholder="1" min="1" required>
                     </div>
                     <input type="submit" value="Cerca intervento">
@@ -214,45 +214,45 @@
                     <!--input nascosto per avere l'id dell'intervento nello stesso form-->
                     <input type="hidden" name="id" id="update-id-intervento" readonly>
                     <div>
-                        <label for="update-nome-intervento" class="required">Nome: </label>
+                        <label for="update-nome-intervento">Nome: </label>
                         <input type="text" name="nome" id="update-nome-intervento" placeholder="Nome intervento" maxlength="50" required>
                     </div>
                     <div>
-                        <label for="update-descrizione-intervento" class="required">Descrizione: </label>
+                        <label for="update-descrizione-intervento">Descrizione: </label>
                         <textarea name="descrizione" id="update-descrizione-intervento" placeholder="Descrizione intervento" required></textarea>
                     </div>
                     <div>
-                        <label for="update-chirurgo-intervento" class="required">Chirurgo: </label>
+                        <label for="update-chirurgo-intervento">Chirurgo: </label>
                         <select name="chirurgo" id="update-chirurgo-intervento" required>
                             <option value="" disabled selected hidden>Chirurgo</option>
                             <!--qui verranno create le option con i nomi degli altri chirurghi-->
                         </select>
                     </div>
                     <div>
-                        <label for="update-specialistica-intervento" class="required">Specialistica: </label>
+                        <label for="update-specialistica-intervento">Specialistica: </label>
                         <select name="specialistica" id="update-specialistica-intervento" required>
                             <option value="" disabled selected hidden>Specialistica</option>
                             <!--qui verranno create le option con i nomi delle altre specialistiche-->
                         </select>
                     </div>
                     <div>
-                        <label for="update-setting-intervento" class="required">Setting: </label>
+                        <label for="update-setting-intervento">Setting: </label>
                         <textarea name="setting" id="update-setting-intervento" placeholder="Setting intervento" required></textarea>
                     </div>
                     <div>
-                        <label for="update-anestesia-intervento" class="required">Anestesia: </label>
+                        <label for="update-anestesia-intervento">Anestesia: </label>
                         <textarea name="anestesia" id="update-anestesia-intervento" placeholder="Anestesia" required></textarea>
                     </div>
                     <div>
-                        <label for="update-campo-intervento" class="required">Campo: </label>
+                        <label for="update-campo-intervento">Campo: </label>
                         <textarea name="campo" id="update-campo-intervento" placeholder="Campo operatorio" required></textarea>
                     </div>
                     <div>
-                        <label for="update-monouso-intervento" class="required">Monouso: </label>
+                        <label for="update-monouso-intervento">Monouso: </label>
                         <textarea name="monouso" id="update-monouso-intervento" placeholder="Monouso" required></textarea>
                     </div>
                     <div>
-                        <label for="update-strumentario-intervento" class="required">Strumentario: </label>
+                        <label for="update-strumentario-intervento">Strumentario: </label>
                         <textarea name="strumentario" id="update-strumentario-intervento" placeholder="Strumentario" required></textarea>
                     </div>
                     <input type="submit" value="Modifica intervento">

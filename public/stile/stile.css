@@ -50,6 +50,10 @@ h2{
     font-size: 2em;
 }
 
+h3{
+    font-size: 1.5em;
+}
+
 p, q, address{
     font-family: sans-serif;
     text-align: justify;
@@ -217,10 +221,6 @@ footer .material-symbols-outlined{
         padding-right: 0.25em;
         white-space: nowrap;
         cursor: text;
-    }
-
-    form .required{
-        text-decoration: underline;
     }
 
     form input,
@@ -400,6 +400,29 @@ footer .material-symbols-outlined{
     }
 /*fine stile pagine lista*/
 
+/*inizio stile pagine dettaglio*/
+#dettaglio{
+    display: flex;
+    flex-direction: column;
+}
+
+#dettaglio h2,
+#dettaglio h3{
+    margin-bottom: 0;
+}
+
+#dettaglio p{
+    text-align: center;
+    margin-top: -1em;
+    margin-bottom: 0;
+}
+
+#dettaglio #top-specialistiche{
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+}
+/*fine stile pagine dettaglio*/
 
 /*stile alternativo schermi <=1024px*/
 @media screen and (max-width: 1024px){
@@ -410,6 +433,12 @@ footer .material-symbols-outlined{
         gap: 0;
     }
     /*fine restyling footer*/
+
+    /*inizio restyling pagine dettaglio*/
+    #dettaglio #top-specialistiche{
+        width: 75%;
+    }
+    /*fine restyling pagine dettaglio*/
 }
 
 /*stile alternativo schermi <=768px*/
@@ -482,4 +511,10 @@ footer .material-symbols-outlined{
         width: 80%;
     }
     /*fine restyling pagine lista*/
+
+    /*inizio restyling pagine dettaglio*/
+    #dettaglio #top-specialistiche{
+        width: 85%;
+    }
+    /*fine restyling pagine dettaglio*/
 }
