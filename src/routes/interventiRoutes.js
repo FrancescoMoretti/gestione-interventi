@@ -1,11 +1,46 @@
 const express=require('express');
 const router=express.Router();
+const fs=require('fs').promises;
+const path=require('path');
 const pool=require('../db');
 const {cloudinary, upload, uploadToCloudinary}=require('../cloudinaryConfig');
 const {gestioneErroriUpload}=require('../middleware/images');
 const {costruisciFiltro}=require('../utils/filtro');
+const {escapeHTML}=require('../../public/scripts/utils');
 //const {validaStringa}=require('../utils/validazione');
 
+//endpoint per rendering server-side per lettura intervento
+router.get('/intervento.html', async (req, res, next)=>{
+    const {id}=req.query;
+    //validazione server-side
+    if(!id){
+        return next();//nessun id
+    }
+    //preparazione query
+    const query="SELECT id, nome FROM interventi WHERE id=?";
+    try{
+        const [result]=await pool.query(query, [id]);
+        //nessun intervento trovato
+        if(result.length===0){
+            return next();
+        }
+        //intervento trovato
+        //estraggo i dati
+        const i=result[0];
+        //costruzione dati
+        //titolo
+        const titolo=`${i.nome} | Gestionale interventi`;
+        //inserisco dati nel codice html
+        let html=await fs.readFile(path.join(__dirname, '../../public/intervento.html'), 'utf-8');
+        html=html.replace('<title>Intervento | Gestionale interventi</title>', `<title>${escapeHTML(titolo)}</title>`);
+        html=html.replace('<h1></h1>', `<h1>${escapeHTML(i.nome)}</h1>`);
+        res.set('Content-Type', 'text/html');
+        return res.send(html);
+    }catch(err){
+        console.error("Errore nel rendering server-side di intervento.html");
+        next(err);
+    }
+});
 
 //endpoint per inserimento interventi
 router.post("/api/intervento", upload.array("immagini"), async (req, res)=>{
@@ -190,8 +225,7 @@ router.get("/api/intervento/:id", async (req, res)=>{
         return res.json({
             success: true,
             intervento: intervento,
-            immagini: listaUrlImmagini,
-            n_immagini: listaUrlImmagini.length
+            immagini: listaUrlImmagini
         });
     }catch(err){
         console.error("Errore nell'endpoint GET intervento: ", err);

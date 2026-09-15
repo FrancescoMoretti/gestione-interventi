@@ -164,7 +164,18 @@ footer .material-symbols-outlined{
 /*inizio stile grid layout*/
 .grid{
     display: grid;
+    grid-template-columns: repeat(3, 1fr);
     column-gap: 2em;
+}
+
+.grid img{
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+}
+
+.grid .element{
+    overflow: hidden;
 }
 /*fine stile grid layout*/
 
@@ -422,6 +433,66 @@ footer .material-symbols-outlined{
     margin-left: auto;
     margin-right: auto;
 }
+
+/*stiel pagine dettaglio interventi*/
+.grid:has(> #scheda){
+    align-items: start;
+}
+
+#scheda{
+    grid-column: span 2;
+    text-align: justify;
+    font-size: 1.2em;
+    vertical-align: top;
+}
+
+#scheda ul{
+    font-family: sans-serif;
+    padding-left: 0;
+    margin: 0;
+}
+
+#scheda li{
+    margin-bottom: 0.75em;
+}
+
+#scheda h1{
+    font-size: 1.25em;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-align: justify;
+}
+
+#scheda span{
+    font-weight: bold;
+}
+
+    /*inizio stile slider*/
+    #slider{
+        width: 100%;
+        overflow: hidden;
+        cursor: w-resize;
+    }
+
+    #slider-track{
+        display: flex;
+        transition: 0.5s ease-out;
+    }
+
+    .slide{
+        /*per vedere correttamente lo slider anche su firefox*/
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 100%;
+    }
+
+    #slider p{
+        font-size: 1em;
+        color: var(--blu3);
+        text-align: center;
+        margin-top: 0.25em;
+    }
+    /*fine stile slider*/
 /*fine stile pagine dettaglio*/
 
 /*stile alternativo schermi <=1024px*/
@@ -517,4 +588,24 @@ footer .material-symbols-outlined{
         width: 85%;
     }
     /*fine restyling pagine dettaglio*/
+
+    /*inizio restyling pagina dettaglio interventi*/
+    .grid:has(> #scheda){
+        display: flex;
+        flex-direction: column;
+    }
+
+    .grid:has(> #scheda) #immagini{
+        margin: auto;
+    }
+
+    #scheda{
+        margin-top: 1em;
+        width: 100%;
+    }
+
+    #scheda h1{
+        text-align: center;
+    }
+    /*fine restyling pagine dettaglio interventi*/
 }
