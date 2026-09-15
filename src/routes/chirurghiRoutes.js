@@ -27,7 +27,7 @@ router.get('/chirurgo.html', async (req, res, next)=>{
         //costruzione dati
         //titolo
         const titolo=`${c.nome_completo} | Gestionale interventi`;
-        //inserisco dati nel file html
+        //inserisco dati nel codice html
         let html=await fs.readFile(path.join(__dirname, '../../public/chirurgo.html'), 'utf-8');
         html=html.replace('<title>Chirurgo | Gestionale interventi</title>', `<title>${escapeHTML(titolo)}</title>`);
         html=html.replace('<h1></h1>', `<h1>${escapeHTML(c.nome_completo)}</h1>`);
@@ -270,7 +270,7 @@ router.get("/api/chirurgo/:id/statistiche", async (req, res)=>{
         console.error("Errore nell'endpoint GET statistiche chirurgo: ", err);
         return res.status(500).json({
             success: false,
-            message: "Errore interno durante il recupero della scheda del chirurgo."
+            message: "Errore interno durante il recupero dei dati del chirurgo."
         });
     }
 });

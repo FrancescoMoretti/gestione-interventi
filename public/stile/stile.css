@@ -417,7 +417,7 @@ footer .material-symbols-outlined{
     margin-bottom: 0;
 }
 
-#dettaglio #top-specialistiche{
+#dettaglio #classifica{
     width: 65%;
     margin-left: auto;
     margin-right: auto;
@@ -435,7 +435,7 @@ footer .material-symbols-outlined{
     /*fine restyling footer*/
 
     /*inizio restyling pagine dettaglio*/
-    #dettaglio #top-specialistiche{
+    #dettaglio #classifica{
         width: 75%;
     }
     /*fine restyling pagine dettaglio*/
@@ -513,7 +513,7 @@ footer .material-symbols-outlined{
     /*fine restyling pagine lista*/
 
     /*inizio restyling pagine dettaglio*/
-    #dettaglio #top-specialistiche{
+    #dettaglio #classifica{
         width: 85%;
     }
     /*fine restyling pagine dettaglio*/
