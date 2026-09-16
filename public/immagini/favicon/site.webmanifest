@@ -1,6 +1,6 @@
 {
     "name": "Gestionale interventi",
-    "short_name": "Gest. interventi",
+    "short_name": "Gestionale interventi",
     "icons": [
         {
             "src": "./icon-192x192.png",
@@ -14,6 +14,6 @@
         }
     ],
     "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "background_color": "#CAF0F8",
     "display": "standalone"
 }
