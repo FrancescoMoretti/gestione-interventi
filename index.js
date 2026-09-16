@@ -26,6 +26,12 @@ app.use(statisticheRoutes);
 //serve i file statici della cartella public
 app.use(express.static('public'));
 
+//favicon
+app.get("/favicon.ico", (req, res)=>{
+    res.set("Cross-Origin-Resource-Policy", "cross-origin");//permetto il recupero del favicon da altre origini
+    res.sendFile(__dirname+"/favicon.ico");
+});
+
 //404
 app.use((req, res)=>{
     res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));//cosi rimane il nome del file non trovato nel browser
