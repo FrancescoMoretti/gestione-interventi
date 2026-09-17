@@ -79,6 +79,7 @@ router.post("/api/intervento", upload.array("immagini"), async (req, res)=>{
                 const file=files[i];
                 const {imageUrl, publicId}=await uploadToCloudinary(file.buffer, "tavoli");
                 publicIds.push(publicId);
+                //query inserimento immagine
                 await connection.execute(queryImmagine, [interventoId, imageUrl]);
             }
         }
@@ -117,7 +118,7 @@ router.delete("/api/intervento/:id", async (req, res)=>{
         return res.status(400).json({
             success: false,
             message: "Id non valido."
-        });
+        });//400: bad request
     }
     //preparazione query
     const queryImmagini="SELECT t.url_immagine FROM tavoli t JOIN interventi i ON t.intervento=i.id WHERE i.id=?";
@@ -141,7 +142,7 @@ router.delete("/api/intervento/:id", async (req, res)=>{
             return res.status(404).json({
                 success: false,
                 message: "Intervento non presente nel database."
-            });
+            });//404: not found
         }
         //cancellazione avvenuta
         return res.json({
@@ -245,13 +246,13 @@ router.put("/api/intervento/:id", async (req, res)=>{
         return res.status(400).json({
             success: false,
             message: "Id non valido."
-        });
+        });//400: bad request
     }
     if(!nome || !String(nome).trim() || !descrizione || !String(descrizione).trim() || !chirurgo || !String(chirurgo).trim() || !specialistica || !String(specialistica).trim() || !setting || !String(setting).trim() || !anestesia || !String(anestesia).trim() || !campo || !String(campo).trim() || !monouso || !String(monouso).trim() || !strumentario || !String(strumentario).trim()){
         return res.status(400).json({
             success: false,
             message: "Tutti i campi sono obbligatori."
-        });
+        });//400: bad request
     }
     nome=nome.trim();
     descrizione=descrizione.trim();

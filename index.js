@@ -23,6 +23,9 @@ app.use(interventiRoutes);
 const statisticheRoutes=require('./src/routes/statisticheRoutes');
 app.use(statisticheRoutes);
 
+const tavoliRoutes=require('./src/routes/tavoliRoutes');
+app.use(tavoliRoutes);
+
 //serve i file statici della cartella public
 app.use(express.static('public'));
 
