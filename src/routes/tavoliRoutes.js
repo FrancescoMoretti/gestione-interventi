@@ -163,7 +163,7 @@ router.delete("/api/intervento/:id/tavolo/:idTavolo", async (req, res)=>{
     if(!idTavolo || !String(idTavolo).trim()){
         return res.status(400).json({
             success: false,
-            message: "Id del tavolo non valido."
+            message: "Id dell'immagine non valido."
         });//400: bad request
     }
     //preparazione query
@@ -175,7 +175,7 @@ router.delete("/api/intervento/:id/tavolo/:idTavolo", async (req, res)=>{
         if(resultImmagine.length===0){
             return res.status(404).json({
                 success: false,
-                message: "Tavolo non trovato."
+                message: "Immagine non trovata."
             });//404: not found
         }
         //immagine trovata
@@ -190,13 +190,13 @@ router.delete("/api/intervento/:id/tavolo/:idTavolo", async (req, res)=>{
         if(resultCancellazione.affectedRows===0){
             return res.status(404).json({
                 success: false,
-                message: "Tavolo non presente nel database."
+                message: "Immagine non presente nel database."
             });//404: not found
         }
         //cancellazione avvenuta
         return res.json({
             success: true,
-            message: "Tavolo eliminato con successo"
+            message: "Immagine eliminata con successo"
         });
     }catch(err){
         console.error("Errore nell'endpoint DELETE tavolo: ", err);

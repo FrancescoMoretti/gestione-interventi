@@ -221,6 +221,10 @@ footer .material-symbols-outlined{
     padding: 0 1.5em 1em 1.5em;
 }
 
+.area-gestione .grid .element #immagini{
+    margin-top: 1em;
+}
+
 .area-gestione .grid .element #immagini p{
     text-align: center;
 }
@@ -323,6 +327,10 @@ footer .material-symbols-outlined{
         }
         /*fine stile select*/
     /*fine stile form*/
+
+    #aggiungi-tavolo-form div{
+        display: block;
+    }
 /*fine stile area gestione*/
 
 /*inizio stile pagine lista*/

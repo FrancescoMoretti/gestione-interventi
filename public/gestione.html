@@ -286,6 +286,7 @@
             <div class="element">
                 <h2>Aggiunta immagini:</h2>
                 <form id="aggiungi-tavolo-form" action="/api/intervento/:id/tavolo" method="POST" enctype="multipart/form-data">
+                    <p><!--messaggio--></p>
                     <div>
                         <label for="id-intervento-add-tavolo">Id intervento: </label>
                         <input type="number" id="id-intervento-add-tavolo" placeholder="1" min="1" required>
@@ -300,6 +301,7 @@
             <div class="element">
                 <h2>Eliminazione immagini:</h2>
                 <form id="cancella-tavolo-form" action="/api/intervento/:id/tavolo/idTavolo" method="DELETE">
+                    <p><!--messaggio--></p>
                     <div>
                         <label for="id-intervento-delete-tavolo">Id intervento: </label>
                         <input type="number" id="id-intervento-delete-tavolo" placeholder="1" min="1" required>

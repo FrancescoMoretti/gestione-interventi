@@ -596,7 +596,7 @@ document.addEventListener("DOMContentLoaded", function(){
             message.textContent="Errore: id è un campo obbligatorio."
             return;
         }
-        message.textContent="Ricerca tavolo in corso..."
+        message.textContent="Ricerca Intervento in corso..."
         try{
             const res=await fetch(`/api/intervento/${encodeURIComponent(id)}/tavoli`);
             const result=await res.json();
@@ -605,7 +605,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 message.textContent=result.message || "Errore durante la ricerca.";
                 return;
             }
-            message.textContent="Tavolo trovato!"
+            message.textContent="Intervento trovato!"
             const immagini=result.tavoli;//immagini del tavolo
             //se non ho immagini
             if(immagini.length===0){
@@ -656,8 +656,73 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
     //fetch POST tavolo
-    document.getElementById("aggiungi-tavolo-form").addEventListener("submit", async (event)=>{});
+    document.getElementById("aggiungi-tavolo-form").addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const form=event.target;
+        const message=form.querySelector('p');
+        //validazione client-side
+        const id=document.getElementById("id-intervento-add-tavolo").value.trim();
+        if(!id){
+            message.textContent="Errore: id è un campo obbligatorio.";
+            return;
+        }
+        const files=document.getElementById("add-tavolo").files;
+        if(files.length===0){
+            message.textContent="Errore: nessuna immagine caricata."
+            return;
+        }
+        message.textContent="Caricamento in corso...";
+        //preparazione dati
+        const formData=new FormData(form);
+        try{
+            const res=await fetch(`/api/intervento/${encodeURIComponent(id)}/tavolo`, {
+                method: "POST",
+                body: formData
+            });
+            const result=await res.json();
+            if(!res.ok || !result.success){
+                message.textContent=result.message || "Errore durante l'inserimento.";
+                return;
+            }
+            message.textContent=result.message;
+            form.reset();
+        }catch(err){
+            message.textContent="Errore di rete: impossibile raggiungere il server.";
+            console.error(err);
+        }
+    });
 
     //fetch DELETE tavolo
-    document.getElementById("cancella-tavolo-form").addEventListener("submit", async (event)=>{});
+    document.getElementById("cancella-tavolo-form").addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const form=event.target;
+        const message=form.querySelector('p');
+        //validazione client-side
+        const id=document.getElementById("id-intervento-delete-tavolo").value.trim();
+        if(!id){
+            message.textContent="Errore: id intervento è un campo obbligatorio.";
+            return;
+        }
+        const idTavolo=document.getElementById("delete-id-tavolo").value.trim();
+        if(!idTavolo){
+            message.textContent="Errore: id tavolo è un campo obbligatorio.";
+            return;
+        }
+        message.textContent="Cancellazione in corso...";
+        try{
+            const res=await fetch(`/api/intervento/${encodeURIComponent(id)}/tavolo/${encodeURIComponent(idTavolo)}`, {
+                method: "DELETE"
+            });
+            const result=await res.json();
+            if(!res.ok || !result.success){
+                message.textContent=result.message || "Errore durante la cancellazione.";
+                return;
+            }
+            message.textContent=result.message;
+            form.reset();
+        }catch(err){
+            message.textContent="Errore di rete: impossibile raggiungere il server.";
+            console.error(err);
+        }
+    });
 });
