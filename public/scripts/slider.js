@@ -15,6 +15,7 @@ function inizializzaSlider(){
         const slider=document.getElementById("slider");
         slider.addEventListener("click", move);
         const infoText=document.createElement("p");
+        infoText.className="info-text";
         infoText.textContent="(Clicca per scorrere le immagini)";
         slider.appendChild(infoText);
     }

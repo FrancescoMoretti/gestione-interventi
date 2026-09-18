@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", function(){
             const res=await fetch(`/api/specialistica/${encodeURIComponent(id)}`);
             const result=await res.json();
             if(res.ok && result.success){
-                message.textContent="Specialistica trovato!";
+                message.textContent="Specialistica trovata!";
                 //popolamento del form di modifica
                 document.getElementById("update-id-specialistica").value=result.content.id;
                 document.getElementById("update-nome-specialistica").value=result.content.nome || "";
@@ -581,4 +581,83 @@ document.addEventListener("DOMContentLoaded", function(){
             console.error(err);
         }
     });
+
+    //fetch GET tavoli
+    document.getElementById("cerca-tavolo-form").addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const form=event.target;
+        const message=form.querySelector('p');
+        const immaginiDiv=document.getElementById("immagini");
+        //svuoto immaginiDiv
+        immaginiDiv.innerHTML="";
+        //validazione client-side
+        const id=document.getElementById('search-id-tavolo').value.trim();
+        if(!id){
+            message.textContent="Errore: id è un campo obbligatorio."
+            return;
+        }
+        message.textContent="Ricerca tavolo in corso..."
+        try{
+            const res=await fetch(`/api/intervento/${encodeURIComponent(id)}/tavoli`);
+            const result=await res.json();
+            //intervento non trovato
+            if(!res.ok || !result.success){
+                message.textContent=result.message || "Errore durante la ricerca.";
+                return;
+            }
+            message.textContent="Tavolo trovato!"
+            const immagini=result.tavoli;//immagini del tavolo
+            //se non ho immagini
+            if(immagini.length===0){
+                const p=document.createElement('p');
+                p.textContent="L'intervento indicato non ha immagini.";
+                immaginiDiv.appendChild(p);
+                return;
+            }
+            //se ho una sola immagine
+            if(immagini.length===1){
+                const img=document.createElement('img');
+                img.src=immagini[0].url_immagine;
+                const p=document.createElement('p');
+                p.textContent="Id immagine: "+immagini[0].id;
+                immaginiDiv.appendChild(img);
+                immaginiDiv.appendChild(p);
+                return;
+            }
+            //se ho più immagini => costruisco slider
+            immaginiDiv.innerHTML=`
+                <div id="slider">
+                    <div id="slider-track">
+                    </div>
+                </div>
+            `;
+            const sliderTrack=document.getElementById("slider-track");
+            for(let i=0; i<immagini.length; i++){
+                const img=document.createElement('img');
+                img.src=immagini[i].url_immagine;
+                img.className="slide";
+                sliderTrack.appendChild(img);
+            }
+            window.inizializzaSlider();
+            //gestione didascalia con id dell'immagine
+            const slider=document.getElementById("slider");
+            const p=document.createElement('p');
+            p.textContent="Id immagine: "+immagini[0].id;
+            slider.appendChild(p);
+            let indiceCorrente=0;
+            slider.addEventListener("click", ()=>{
+                indiceCorrente=(indiceCorrente+1)%immagini.length;
+                p.textContent="Id immagine: "+immagini[indiceCorrente].id;
+            });
+        }catch(err){
+            message.textContent="Errore di rete: impossibile raggiungere il server.";
+            console.error(err);
+        }
+    });
+
+    //fetch POST tavolo
+    document.getElementById("aggiungi-tavolo-form").addEventListener("submit", async (event)=>{});
+
+    //fetch DELETE tavolo
+    document.getElementById("cancella-tavolo-form").addEventListener("submit", async (event)=>{});
 });

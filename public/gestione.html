@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <!--script logici-->
     <script src="scripts/gestione_script.js" defer></script>
+    <script src="scripts/slider.js" defer></script>
 </head>
 
 <body>
@@ -270,12 +271,45 @@
         <div class="grid" id="tavolo-grid">
             <div class="element">
                 <h2>Lista immagini:</h2>
+                <form id="cerca-tavolo-form" action="/api/intervento/:id/tavoli" method="GET">
+                    <p><!--messaggio--></p>
+                    <div>
+                        <label for="search-id-tavolo">Id intervento: </label>
+                        <input type="number" id="search-id-tavolo" placeholder="1" min="1" required>
+                    </div>
+                    <input type="submit" value="Cerca tavolo">
+                </form>
+                <div id="immagini">
+                    <!--slider immagini-->
+                </div>
             </div>
             <div class="element">
                 <h2>Aggiunta immagini:</h2>
+                <form id="aggiungi-tavolo-form" action="/api/intervento/:id/tavolo" method="POST" enctype="multipart/form-data">
+                    <div>
+                        <label for="id-intervento-add-tavolo">Id intervento: </label>
+                        <input type="number" id="id-intervento-add-tavolo" placeholder="1" min="1" required>
+                    </div>
+                    <div>
+                        <label for="add-tavolo">Tavolo: </label>
+                        <input type="file" name="immagini" id="add-tavolo" accept="image/*" multiple>
+                    </div>
+                    <input type="submit" value="Aggiungi immagine">
+                </form>
             </div>
             <div class="element">
                 <h2>Eliminazione immagini:</h2>
+                <form id="cancella-tavolo-form" action="/api/intervento/:id/tavolo/idTavolo" method="DELETE">
+                    <div>
+                        <label for="id-intervento-delete-tavolo">Id intervento: </label>
+                        <input type="number" id="id-intervento-delete-tavolo" placeholder="1" min="1" required>
+                    </div>
+                    <div>
+                        <label for="delete-id-tavolo">Id immagine: </label>
+                        <input type="number" name="id" id="delete-id-tavolo" placeholder="1" min="1" required>
+                    </div>
+                    <input type="submit" value="Elimina immagine">
+                </form>
             </div>
         </div>
     </main>

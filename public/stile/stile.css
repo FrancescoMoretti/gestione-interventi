@@ -221,6 +221,10 @@ footer .material-symbols-outlined{
     padding: 0 1.5em 1em 1.5em;
 }
 
+.area-gestione .grid .element #immagini p{
+    text-align: center;
+}
+
     /*inizio stile form*/
     form{
         font-family: sans-serif;
@@ -486,7 +490,7 @@ footer .material-symbols-outlined{
         flex-basis: 100%;
     }
 
-    #slider p{
+    #slider .info-text{
         font-size: 1em;
         color: var(--blu3);
         text-align: center;
