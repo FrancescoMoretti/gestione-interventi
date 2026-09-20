@@ -592,6 +592,10 @@ footer .material-symbols-outlined{
         /*display: flex;*/
         flex-direction: column;
     }
+
+    .area-gestione #radio-div label{
+        padding: 0.20em 0.3em;
+    }
     /*fine restyling area gestione*/
 
     /*inizio restyling pagine lista*/
