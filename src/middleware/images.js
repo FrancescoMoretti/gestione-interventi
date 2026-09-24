@@ -20,6 +20,7 @@ const gestioneErroriUpload=(err, req, res, next)=>{
             message: message
         });
     }
+    next(err);//se l'errore non è relativo a multer=>lo passo alla funzione successiva
 };
 
 module.exports={gestioneErroriUpload};
