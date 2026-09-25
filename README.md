@@ -199,7 +199,9 @@ Il progetto adotta alcune misure di base, coerenti con la sua natura di strument
 - **Validazione upload immagini**: whitelist di tipi MIME (jpeg, png, webp), limite di dimensione (5MB) e di numero di file per richiesta;
 - **Vincoli referenziali a livello di database**: `ON DELETE RESTRICT` per chirurghi/specialistiche referenziati da un intervento, `ON DELETE CASCADE` per le immagini di un intervento eliminato;
 - **Escaping HTML lato client** (`escapeHTML`) sui dati inseriti dinamicamente nelle pagine pubbliche di dettaglio, prima dell'inserimento via `innerHTML`.
-L'applicazione **non** implementa un sistema di autenticazione: è pensata per un uso interno, su un ambiente non esposto pubblicamente, non per la pubblicazione come servizio accessibile da chiunque.
+- **Gestione centralizzata degli errori non previsti**: un error handler globale intercetta le eccezioni non gestite nelle rotte e risponde con un JSON uniforme (500), invece di lasciare la richiesta senza risposta.
+
+> L'applicazione **non** implementa un sistema di autenticazione: è pensata per un uso interno, su un ambiente non esposto pubblicamente, non per la pubblicazione come servizio accessibile da chiunque.
  
 ## Licenza
  
