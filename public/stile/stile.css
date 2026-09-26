@@ -589,7 +589,6 @@ footer .material-symbols-outlined{
 
     /*inizio restyling area gestione*/
     .area-gestione .grid{
-        /*display: flex;*/
         flex-direction: column;
     }
 
