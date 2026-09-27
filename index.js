@@ -3,6 +3,8 @@ const express=require('express');
 const path=require('path');
 
 const pool=require('./src/db');
+const {keepAlive}=require('express-mysql-cloudinary-kit');
+keepAlive(pool);//funzione di keepalive per non far andare il db (Aiven) in timeout
 
 const app=express();
 
