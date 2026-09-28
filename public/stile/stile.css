@@ -1,3 +1,9 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap');
+/*
+Font serif: "Aleo";
+Font sans-serif: "Quicksand";
+*/
 /*stile generale*/
 :root{
     --bianco: #fff;
@@ -37,7 +43,7 @@ main{
 }
 
 h1, h2, h3, h4, h5, h6{
-    font-family: serif;
+    font-family: "Aleo", serif;
     text-align: center;
 }
 
@@ -55,14 +61,14 @@ h3{
 }
 
 p, q, address{
-    font-family: sans-serif;
+    font-family: "Quicksand", sans-serif;
     text-align: justify;
     line-height: 1.05em;
     font-size: 1.05em;
 }
 
 a{
-    font-family: sans-serif;
+    font-family: "Quicksand", sans-serif;
     text-decoration: none;
     color: var(--nero);
 }
@@ -74,7 +80,7 @@ ul{
 
 /*inizio stile menù*/
 header nav{
-    font-family: serif;
+    font-family: "Aleo", serif;
     background-color: var(--blu1);
     color: var(--blu5);
     position: fixed;
@@ -106,7 +112,7 @@ header nav{
 #menu a{
     color: var(--blu5);
     font-weight: bold;
-    font-family: serif;
+    font-family: "Aleo", serif;
     transition: color 0.3s ease-out;
     padding: 0.5em 1.5em;
     font-size: 1.25em;
@@ -198,7 +204,7 @@ footer .material-symbols-outlined{
     border-radius: 35%;
     border: var(--nero) solid 2px;
     transition: color 0.3s ease-out;
-    font-family: sans-serif;
+    font-family: "Quicksand", sans-serif;
     font-weight: bold;
 }
 
@@ -231,7 +237,7 @@ footer .material-symbols-outlined{
 
     /*inizio stile form*/
     form{
-        font-family: sans-serif;
+        font-family: "Quicksand", sans-serif;
     }
 
     form label{
@@ -245,12 +251,12 @@ footer .material-symbols-outlined{
     form input,
     form select{
         font-size: 1.05em;
-        font-family: sans-serif;
+        font-family: "Quicksand", sans-serif;
     }
 
     form textarea{
         font-size: 1.05em;
-        font-family: sans-serif;
+        font-family: "Quicksand", sans-serif;
         width: 100%;
         height: 1.20em;
     }
@@ -291,7 +297,7 @@ footer .material-symbols-outlined{
         width: auto;
         padding: 0.20em, 1em;
         font-size: 1em;
-        font-family: sans-serif;
+        font-family: "Quicksand", sans-serif;
         cursor: pointer;
         font-weight: bold;
         background-color: var(--blu2);
@@ -348,7 +354,7 @@ footer .material-symbols-outlined{
 }
 
 #ricerca-sec label{
-    font-family: sans-serif;
+    font-family: "Quicksand", sans-serif;
     font-weight: bold;
     font-size: 1.10em;
 }
@@ -370,7 +376,7 @@ footer .material-symbols-outlined{
         border: 2px solid var(--nero);
         margin: auto;
         margin-top: 1em;
-        font-family: sans-serif;
+        font-family: "Quicksand", sans-serif;
         grid-column: span 1;
     }
 
@@ -399,7 +405,7 @@ footer .material-symbols-outlined{
 
     .lista-contenuti #paginazione{
         text-align: center;
-        font-family: sans-serif;
+        font-family: "Quicksand", sans-serif;
         font-size: 1.05em;
         margin: 1em auto 0 auto;
         grid-column: span 3;
@@ -459,7 +465,7 @@ footer .material-symbols-outlined{
 }
 
 #scheda ul{
-    font-family: sans-serif;
+    font-family: "Quicksand", sans-serif;
     padding-left: 0;
     margin: 0;
 }
@@ -471,7 +477,7 @@ footer .material-symbols-outlined{
 #scheda h1{
     font-size: 1.25em;
     font-weight: bold;
-    font-family: sans-serif;
+    font-family: "Quicksand", sans-serif;
     text-align: justify;
 }
 
@@ -525,7 +531,7 @@ footer .material-symbols-outlined{
 }
 
 #statistiche-div ul{
-    font-family: sans-serif;
+    font-family: "Quicksand", sans-serif;
     padding-left: 0;
 }
 
