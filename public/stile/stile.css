@@ -472,6 +472,7 @@ footer .material-symbols-outlined{
 
 #scheda li{
     margin-bottom: 0.75em;
+    white-space: pre-line;
 }
 
 #scheda h1{
