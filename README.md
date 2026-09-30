@@ -25,9 +25,8 @@ Le immagini sono gestite tramite **Cloudinary**; i dati testuali sono conservati
  
 **Backend**
 - Node.js + Express 5
-- MySQL (driver `mysql2`, connessione via pool) — hosting su Aiven
-- `multer` (in memoria) + Cloudinary SDK per l'upload delle immagini
 - `dotenv` per la configurazione
+- Moduli comuni (pool MySQL su Aiven, config Cloudinary/multer, validazione escaping HTML e slider di immagini) sono estratti dalla libreria: ['express-mysql-cloudinary-kit'](https://github.com/FrancescoMoretti/express-mysql-cloudinary-kit)
 
 **Frontend**
 - HTML, CSS, JavaScript vanilla
@@ -86,34 +85,29 @@ flowchart LR
 │   ├── stile/
 │   │   └── stile.css
 │   ├── scripts/
-│   │   ├── utils.js                  # escapeHTML, condiviso client/server
 │   │   ├── lista_contenuti_script.js # liste paginate con ricerca
 │   │   ├── intervento_script.js
 │   │   ├── chirurgo_script.js
 │   │   ├── specialistica_script.js
 │   │   ├── statistiche_script.js
-│   │   ├── slider.js                 # slider immagini riutilizzabile
 │   │   └── gestione_script.js        # logica del pannello di gestione
 │   └── immagini/favicon/
 ├── src/
-│   ├── db.js                         # pool di connessione MySQL
-│   ├── cloudinaryConfig.js           # configurazione Cloudinary e multer
-│   ├── middleware/
-│   │   └── images.js                 # gestione errori upload (multer)
-│   ├── routes/
-│   │   ├── chirurghiRoutes.js
-│   │   ├── specialisticheRoutes.js
-│   │   ├── interventiRoutes.js
-│   │   ├── statisticheRoutes.js
-│   │   └── tavoliRoutes.js
-│   └── utils/
-│       ├── filtro.js                 # costruzione clausole WHERE per la ricerca multi-colonna
-│       └── validazione.js
+│   ├── config/
+│   │   ├── db.js                         # pool di connessione MySQL
+│   │   └── cloudinary.js           # configurazione Cloudinary e multer
+│   └── routes/
+│       ├── chirurghiRoutes.js
+│       ├── specialisticheRoutes.js
+│       ├── interventiRoutes.js
+│       ├── statisticheRoutes.js
+│       └── tavoliRoutes.js
 ├── index.js                          # entry point del server Express
 ├── favicon.ico
 └── package.json
 ```
- 
+> Validazione, keepalive del DB, gestione errori upload, escaping HTML lato client, slider immagini, error handler generico, gestore 404, gestore del favicon e gestore del filtro per barre di ricerca sono forniti da [`express-mysql-cloudinary-kit`](https://github.com/FrancescoMoretti/express-mysql-cloudinary-kit), installata come dipendenza.
+
 ## Funzionalità
  
 - Anagrafica di chirurghi e specialistiche, con vincolo di cancellazione se referenziati da un intervento
@@ -196,9 +190,9 @@ Le route seguono una convenzione singolare/plurale: percorsi al singolare (`/api
 Il progetto adotta alcune misure di base, coerenti con la sua natura di strumento interno:
  
 - **Query parametrizzate** ovunque: nessuna concatenazione di stringhe SQL;
-- **Validazione upload immagini**: whitelist di tipi MIME (jpeg, png, webp), limite di dimensione (5MB) e di numero di file per richiesta;
+- **Upload immagini**: whitelist di tipi MIME, limite di dimensione (5MB) e di numero di file, gestione centralizzata degli errori di upload;
 - **Vincoli referenziali a livello di database**: `ON DELETE RESTRICT` per chirurghi/specialistiche referenziati da un intervento, `ON DELETE CASCADE` per le immagini di un intervento eliminato;
-- **Escaping HTML lato client** (`escapeHTML`) sui dati inseriti dinamicamente nelle pagine pubbliche di dettaglio, prima dell'inserimento via `innerHTML`.
+- **Escaping HTML lato client** (`escapeHTML`) su tutti i dati generati dall'utente prima dell'inserimento via `innerHTML`, per prevenire XSS stored;
 - **Gestione centralizzata degli errori non previsti**: un error handler globale intercetta le eccezioni non gestite nelle rotte e risponde con un JSON uniforme (500), invece di lasciare la richiesta senza risposta.
 
 > L'applicazione **non** implementa un sistema di autenticazione: è pensata per un uso interno, su un ambiente non esposto pubblicamente, non per la pubblicazione come servizio accessibile da chiunque.
