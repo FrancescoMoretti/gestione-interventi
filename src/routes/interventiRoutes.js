@@ -2,12 +2,9 @@ const express=require('express');
 const router=express.Router();
 const fs=require('fs').promises;
 const path=require('path');
-const pool=require('../db');
-const {cloudinary, upload, uploadToCloudinary}=require('../cloudinaryConfig');
-const {gestioneErroriUpload}=require('../middleware/images');
-const {costruisciFiltro}=require('../utils/filtro');
-const {escapeHTML}=require('../../public/scripts/utils');
-//const {validaStringa}=require('../utils/validazione');
+const pool=require('../config/db');
+const {cloudinary, upload, uploadToCloudinary}=require('../config/cloudinary');
+const {escapeHTML, costruisciFiltro, gestioneErroriUpload}=require('express-mysql-cloudinary-kit');
 
 //endpoint per rendering server-side per lettura intervento
 router.get('/intervento.html', async (req, res, next)=>{

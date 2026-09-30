@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async function caricaChirurgo(){
         const chirurgo=result.content;//dati del chirurgo
         //popolamento della scheda
         const divInterventi=document.getElementById("num-interventi");
-        divInterventi.querySelector('h2').innerText+=`${escapeHTML(chirurgo.numero_interventi)}`;
+        divInterventi.querySelector('h2').innerText+=` ${escapeHTML(chirurgo.numero_interventi)}`;
         const tbody=document.querySelector("#classifica tbody");
         chirurgo.top_specialistiche.forEach(specialistica=>{
             const tr=document.createElement('tr');

@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async function caricaSpecialistica
         const specialistica=result.content;//dati della specialistica
         //popolamento della scheda
         const divInterventi=document.getElementById("num-interventi");
-        divInterventi.querySelector('h2').innerText+=`${escapeHTML(specialistica.numero_interventi)}`;
+        divInterventi.querySelector('h2').innerText+=` ${escapeHTML(specialistica.numero_interventi)}`;
         const tbody=document.querySelector('#classifica tbody');
         specialistica.top_chirurghi.forEach(chirurgo=>{
             const tr=document.createElement('tr');

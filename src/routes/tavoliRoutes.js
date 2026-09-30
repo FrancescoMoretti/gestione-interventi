@@ -1,8 +1,8 @@
 const express=require('express');
 const router=express.Router();
-const pool=require('../db');
-const {cloudinary, upload, uploadToCloudinary}=require('../cloudinaryConfig');
-const {gestioneErroriUpload}=require('../middleware/images');
+const pool=require('../config/db');
+const {cloudinary, upload, uploadToCloudinary}=require('../config/cloudinary');
+const {gestioneErroriUpload}=require('express-mysql-cloudinary-kit');
 
 //endpoint per lista immagini tavoli
 router.get("/api/intervento/:id/tavoli", async (req, res)=>{

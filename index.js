@@ -2,8 +2,8 @@ require('dotenv').config();
 const express=require('express');
 const path=require('path');
 
-const pool=require('./src/db');
-const {keepAlive}=require('express-mysql-cloudinary-kit');
+const pool=require('./src/config/db');
+const {keepAlive, errorHandler, createNotFoundHandler, createFaviconHandler}=require('express-mysql-cloudinary-kit');
 keepAlive(pool);//funzione di keepalive per non far andare il db (Aiven) in timeout
 
 const app=express();
@@ -31,25 +31,19 @@ app.use(tavoliRoutes);
 //serve i file statici della cartella public
 app.use(express.static('public'));
 
+//inncludo libreria per script frontend
+app.use('/lib', express.static(
+    path.join(path.dirname(require.resolve('express-mysql-cloudinary-kit/package.json')), 'client')
+));
+
 //favicon
-app.get("/favicon.ico", (req, res)=>{
-    res.set("Cross-Origin-Resource-Policy", "cross-origin");//permetto il recupero del favicon da altre origini
-    res.sendFile(__dirname+"/favicon.ico");
-});
+app.get("/favicon.ico", createFaviconHandler(path.join(__dirname, "favicon.ico")));
 
 //404
-app.use((req, res)=>{
-    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));//cosi rimane il nome del file non trovato nel browser
-});
+app.use(createNotFoundHandler(path.join(__dirname, 'public')));
 
 //handler per errori non gestiti
-app.use((err, req, res, next)=>{
-    console.error("Errore non gestito: ", err);
-    res.status(err.status || 500).json({
-        success: false,
-        message: "Errore interno lato server."
-    });
-});
+app.use(errorHandler);
 
 app.listen(PORT, ()=>{
     console.log(`Server in esecuzione sulla porta ${PORT}`);
