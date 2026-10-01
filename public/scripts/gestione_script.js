@@ -596,7 +596,7 @@ document.addEventListener("DOMContentLoaded", function(){
             message.textContent="Errore: id è un campo obbligatorio."
             return;
         }
-        message.textContent="Ricerca Intervento in corso..."
+        message.textContent="Ricerca intervento in corso..."
         try{
             const res=await fetch(`/api/intervento/${encodeURIComponent(id)}/tavoli`);
             const result=await res.json();
