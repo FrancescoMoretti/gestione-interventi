@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", async function (){
                     <li><span>Specialistiche</span>: ${escapeHTML(statistiche.numeroSpecialistiche)}</li>
                     <li><span>Chirurghi</span>: ${escapeHTML(statistiche.numeroChirurghi)}</li>
                 </ul>
-                <p><span>Specialistica</span> con più interventi: ${escapeHTML(statistiche.specialisticaMax)}</p>
-                <p><span>Chirurgo</span> con più interventi: ${escapeHTML(statistiche.chirurgoMax)}</p>
+                <p><span>Specialistica</span> con più interventi: <span>${escapeHTML(statistiche.specialisticaMax)}</span></p>
+                <p><span>Chirurgo</span> con più interventi: <span>${escapeHTML(statistiche.chirurgoMax)}</span></p>
             `;
         }else{
             message.textContent=result.message;
