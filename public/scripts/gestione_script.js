@@ -699,13 +699,9 @@ document.addEventListener("DOMContentLoaded", function(){
         const message=form.querySelector('p');
         //validazione client-side
         const id=document.getElementById("id-intervento-delete-tavolo").value.trim();
-        if(!id){
-            message.textContent="Errore: id intervento è un campo obbligatorio.";
-            return;
-        }
         const idTavolo=document.getElementById("delete-id-tavolo").value.trim();
-        if(!idTavolo){
-            message.textContent="Errore: id tavolo è un campo obbligatorio.";
+        if(!id || !idTavolo){
+            message.textContent="Errore: id intervento e id del tavolo sono campi obbligatori.";
             return;
         }
         message.textContent="Cancellazione in corso...";

@@ -150,7 +150,7 @@ router.post("/api/intervento/:id/tavolo", upload.array('immagini'), async (req, 
     }
 });
 
-//nedpoint per cancellazione immagine tavolo
+//endpoint per cancellazione immagine tavolo
 router.delete("/api/intervento/:id/tavolo/:idTavolo", async (req, res)=>{
     const {id, idTavolo}=req.params;
     //validazione server-side
@@ -182,7 +182,7 @@ router.delete("/api/intervento/:id/tavolo/:idTavolo", async (req, res)=>{
         //estraggo il public_id dall'url dell'immagine ('.../v12345/campione.jpg'=>'campione')
         const nomeFile=resultImmagine[0].url_immagine.split('/').pop().split('.')[0];
         const publicId=`gestione_interventi/tavoli/${nomeFile}`;
-        //cancello immagine da Cloudinary
+        //cancello immagine da cloudinary
         await cloudinary.uploader.destroy(publicId);
         //cancello tavolo dal DB
         const [resultCancellazione]=await pool.query(queryCancellazione, [idTavolo]);
