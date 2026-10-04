@@ -632,12 +632,12 @@ document.addEventListener("DOMContentLoaded", function(){
                 </div>
             `;
             const sliderTrack=document.getElementById("slider-track");
-            for(let i=0; i<immagini.length; i++){
+            immagini.forEach(immagine=>{
                 const img=document.createElement('img');
-                img.src=immagini[i].url_immagine;
+                img.src=immagine.url_immagine;
                 img.className="slide";
                 sliderTrack.appendChild(img);
-            }
+            });
             window.inizializzaSlider();
             //gestione didascalia con id dell'immagine
             const slider=document.getElementById("slider");
