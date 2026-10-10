@@ -646,6 +646,10 @@ footer .material-symbols-outlined{
         width: 80%;
     }
 
+    .lista-contenuti table .colonna-id{
+        display: none;
+    }
+
     .lista-contenuti table td.nome-intervento{
         /*mando a capo i nomi degli interventi anche prima degli spazi*/
         word-break: break-all;

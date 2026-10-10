@@ -163,7 +163,7 @@ router.get("/api/interventi", async (req, res)=>{
     //query per contare le righe che avrà la tabella
     let queryTotali="SELECT COUNT(*) AS totali FROM interventi i JOIN chirurghi c ON i.chirurgo=c.id JOIN specialistiche s ON i.specialistica=s.id";
     //query per estrarre dati sugli interventi
-    let queryInterventi=`SELECT i.id, i.nome, CONCAT(c.nome, ' ', c.cognome) AS chirurgo_nome_completo, s.nome AS specialistica FROM interventi i JOIN chirurghi c ON i.chirurgo=c.id JOIN specialistiche s ON i.specialistica=s.id`;
+    let queryInterventi=`SELECT i.id, i.nome, c.cognome AS chirurgo, s.nome AS specialistica FROM interventi i JOIN chirurghi c ON i.chirurgo=c.id JOIN specialistiche s ON i.specialistica=s.id`;
     let paramsInterventi=[];
     let paramsTotali=[];
     //gestione filtro

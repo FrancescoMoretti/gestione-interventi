@@ -25,13 +25,12 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         case 'interventi':
             endpoint="/api/interventi";
             paginaContenuto="/intervento.html";
-            colonne=["id", "nome", "specialistica", "chirurgo_nome_completo"];
+            colonne=["id", "nome", "specialistica", "chirurgo"];
             chiaveDati="interventi";
         break;
         default:
             console.error("Errore: pagina non riconosciuta.");
             return;
-        break;
     }
 
     //elementi fissi
@@ -113,8 +112,12 @@ document.addEventListener("DOMContentLoaded", async ()=>{
             colonne.forEach(chiave=>{
                 const td=document.createElement("td");
                 td.textContent=contenuto[chiave];
-                if(chiave==="nome"){
-                    td.classList.add("nome-intervento");
+                if(chiave==="id"){
+                    td.classList.add("colonna-id");
+                }else{
+                    if(idBody==="interventi" && chiave==="nome"){
+                        td.classList.add("nome-intervento");
+                    }
                 }
                 tr.appendChild(td);
             });
