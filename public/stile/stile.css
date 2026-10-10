@@ -258,11 +258,11 @@ footer .material-symbols-outlined{
         font-size: 1.05em;
         font-family: "Quicksand", sans-serif;
         width: 100%;
-        line-height: 3;
+        height: 3.60em;
     }
 
     form textarea.descrizione{
-        line-height: 5;
+        height: 6em;
     }
 
     form input[type=number]{
