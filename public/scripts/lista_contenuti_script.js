@@ -113,6 +113,9 @@ document.addEventListener("DOMContentLoaded", async ()=>{
             colonne.forEach(chiave=>{
                 const td=document.createElement("td");
                 td.textContent=contenuto[chiave];
+                if(chiave==="nome"){
+                    td.classList.add("nome-intervento");
+                }
                 tr.appendChild(td);
             });
             tr.addEventListener("click", ()=>{
